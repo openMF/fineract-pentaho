@@ -1,0 +1,79 @@
+repositories {
+    jcenter()
+    maven { url 'https://nexus.pentaho.org/content/groups/omni/' }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE'
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+    dependencies {
+        dependency 'pentaho-reporting-engine:pentaho-reporting-engine-classic-core:3.9.1.1'
+
+        dependencySet(group: 'pentaho-reporting-engine', version: '3.9.1-GA') {
+            entry 'pentaho-reporting-engine-classic-extensions'
+            entry 'pentaho-reporting-engine-classic-extensions-scripting'
+            entry 'pentaho-reporting-engine-wizard-core'
+        }
+
+        dependencySet(group: 'pentaho-report-designer', version: '3.9.1-GA') {
+            entry 'pentaho-reporting-engine-wizard-xul'
+        }
+
+        dependencySet(group: 'pentaho-library', version: '1.2.8') {
+            entry 'libbase'
+            entry 'libdocbundle'
+            entry 'libfonts'
+            entry 'libformat'
+            entry 'libformula'
+            entry 'libloader'
+            entry 'librepository'
+            entry 'libserializer'
+            entry 'libsparkline'
+            entry 'libxml'
+        }
+    }
+}
+
+dependencies {
+    implementation(
+        // Fineract!
+        files("../fineract/build/classes/java/main/"),
+
+        // Fineract dependencies (TODO version should *NOT* be specified here...)
+        'org.slf4j:slf4j-api:1.7.30',
+        'org.apache.openjpa:openjpa:3.1.2',
+        'org.apache.commons:commons-lang3:3.10',
+        'org.springframework:spring-context:5.2.6.RELEASE',
+        'org.springframework.security:spring-security-core:5.3.4.RELEASE',
+        'org.springframework.data:spring-data-commons:2.3.4.RELEASE',
+        'javax.ws.rs:jsr311-api:1.1.1',
+
+        // Pentaho..
+        'pentaho-reporting-engine:pentaho-reporting-engine-classic-core',
+        'pentaho-reporting-engine:pentaho-reporting-engine-classic-extensions',
+        'pentaho-reporting-engine:pentaho-reporting-engine-classic-extensions-scripting',
+        'pentaho-reporting-engine:pentaho-reporting-engine-wizard-core',
+        'pentaho-report-designer:pentaho-reporting-engine-wizard-xul',
+
+        'pentaho-library:libbase',
+        'pentaho-library:libdocbundle',
+        'pentaho-library:libfonts',
+        'pentaho-library:libformat',
+        'pentaho-library:libformula',
+        'pentaho-library:libloader',
+        'pentaho-library:librepository',
+        'pentaho-library:libserializer',
+        'pentaho-library:libsparkline',
+        'pentaho-library:libxml'
+    )
+}
