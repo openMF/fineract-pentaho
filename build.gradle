@@ -44,6 +44,10 @@ dependencyManagement {
     }
 }
 
+configurations {
+    embed // see below
+}
+
 dependencies {
     implementation(
         // Fineract!
@@ -57,7 +61,9 @@ dependencies {
         'org.springframework.security:spring-security-core:5.3.4.RELEASE',
         'org.springframework.data:spring-data-commons:2.3.4.RELEASE',
         'javax.ws.rs:jsr311-api:1.1.1',
+    )
 
+    embed(
         // Pentaho..
         'pentaho-reporting-engine:pentaho-reporting-engine-classic-core',
         'pentaho-reporting-engine:pentaho-reporting-engine-classic-extensions',
@@ -76,4 +82,13 @@ dependencies {
         'pentaho-library:libsparkline',
         'pentaho-library:libxml'
     )
+
+    configurations.compile.extendsFrom(configurations.embed)
+}
+
+// https://discuss.gradle.org/t/how-to-include-dependencies-in-jar/19571/17
+jar {
+    from {
+        configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }

@@ -5,11 +5,9 @@ see https://issues.apache.org/jira/browse/FINERACT-1127
 
 ## TODO
 
-1. make it actually really build? ;)
+1. test it (functionally; does this actually work?!)
 
 1. add minimal documentation above (e.g. `java -jar f.jar;fineract-pentaho.jar` ?)
-
-1. test it (functionally; does this actually work?!)
 
 1. inherit dependency management from Fineract, so that e.g.
    JAX RS & commons lang versions don't have to be repeated.
