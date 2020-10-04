@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
  * You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package org.mifos.fineract.pentaho;
+package org.apache.fineract.infrastructure.report.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,7 +23,6 @@ import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConn
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
-import org.apache.fineract.infrastructure.report.service.ReportingProcessService;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.useradministration.domain.AppUser;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
