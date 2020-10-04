@@ -88,6 +88,7 @@ dependencies {
 
 // https://discuss.gradle.org/t/how-to-include-dependencies-in-jar/19571/17
 jar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
     from {
         configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
     }
