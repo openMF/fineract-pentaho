@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+# TODO FINERACT-tbd why this cannot work...
+# java -cp fineract-pentaho/build/libs/fineract-pentaho.jar:$(ls fineract/build/libs/fineract-provider*.jar) org.springframework.boot.loader.JarLauncher
+
+# Instead...
+SRC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+WORKDIR=/tmp/$$
+rm -rf $WORKDIR
+mkdir -p $WORKDIR
+cd $WORKDIR
+
+# ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, let's:
+jar -xvf $SRC/../fineract/build/libs/fineract-provider*.jar
+cp $SRC/build/libs/fineract-pentaho.jar BOOT-INF/lib/
+java -cp . org.springframework.boot.loader.JarLauncher
