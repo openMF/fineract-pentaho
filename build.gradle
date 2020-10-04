@@ -1,19 +1,12 @@
+plugins {
+	id 'java-library'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+}
+
 repositories {
     jcenter()
     maven { url 'https://nexus.pentaho.org/content/groups/omni/' }
 }
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE'
-    }
-}
-
-apply plugin: 'java-library'
-apply plugin: 'io.spring.dependency-management'
 
 dependencyManagement {
     dependencies {
