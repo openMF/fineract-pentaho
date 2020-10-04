@@ -92,8 +92,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             outputType = outputTypeParam;
         }
 
-        if (!(outputType.equalsIgnoreCase("HTML") || outputType.equalsIgnoreCase("PDF") || outputType.equalsIgnoreCase("XLS")
-                || outputType.equalsIgnoreCase("XLSX") || outputType.equalsIgnoreCase("CSV"))) {
+        if ((!outputType.equalsIgnoreCase("HTML") && !outputType.equalsIgnoreCase("PDF") && !outputType.equalsIgnoreCase("XLS") && !outputType.equalsIgnoreCase("XLSX") && !outputType.equalsIgnoreCase("CSV"))) {
             throw new PlatformDataIntegrityException("error.msg.invalid.outputType", "No matching Output Type: " + outputType);
         }
 
@@ -179,8 +178,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
              */
             for (final ParameterDefinitionEntry paramDefEntry : paramsDefinition.getParameterDefinitions()) {
                 final String paramName = paramDefEntry.getName();
-                if (!(paramName.equals("tenantUrl") || (paramName.equals("userhierarchy") || paramName.equals("username")
-                        || (paramName.equals("password") || paramName.equals("userid"))))) {
+                if ((!paramName.equals("tenantUrl") && (!paramName.equals("userhierarchy") && !paramName.equals("username") && (!paramName.equals("password") && !paramName.equals("userid"))))) {
 
                     String outPutInfo2 = "paramName:" + paramName;
                     logger.info("paramName: {}", outPutInfo2);
