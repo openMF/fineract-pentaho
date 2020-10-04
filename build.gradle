@@ -1,5 +1,6 @@
 plugins {
 	id 'java-library'
+	id 'java-library-distribution'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
 
@@ -38,7 +39,7 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation(
+    compileOnly(
         // Fineract!
         files("../fineract/build/classes/java/main/"),
 
@@ -50,7 +51,9 @@ dependencies {
         'org.springframework.security:spring-security-core:5.3.4.RELEASE',
         'org.springframework.data:spring-data-commons:2.3.4.RELEASE',
         'javax.ws.rs:jsr311-api:1.1.1',
+    )
 
+    implementation(
         // Pentaho..
         'pentaho-reporting-engine:pentaho-reporting-engine-classic-core',
         'pentaho-reporting-engine:pentaho-reporting-engine-classic-extensions',
@@ -69,4 +72,21 @@ dependencies {
         'pentaho-library:libsparkline',
         'pentaho-library:libxml'
     )
+}
+
+distributions {
+    main {
+        contents {
+            from 'README.md', 'LICENSE', 'run'
+            into('pentahoReports') {
+            	from { 'pentahoReports' }
+            }
+            
+            // Add fineract-pentaho.jar into lib/ just so it's easier to install
+            // TODO exclude fineract-pentaho.jar at ZIP root (it's currently twice in the dist ZIP, at ./ and lib/) 
+            into('lib') {
+                from(jar)
+            }
+        }
+    }
 }

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# TODO FINERACT-tbd why this cannot work...
-# java -cp fineract-pentaho/build/libs/fineract-pentaho.jar:$(ls fineract/build/libs/fineract-provider*.jar) org.springframework.boot.loader.JarLauncher
-
-# Instead...
+# Prepare
 SRC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 WORKDIR=/tmp/$$
 rm -rf $WORKDIR
-mkdir -p $WORKDIR
-cd $WORKDIR
+mkdir -p $WORKDIR/fineract
 
-# ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, let's:
-jar -xvf $SRC/../fineract/build/libs/fineract-provider*.jar
-cp $SRC/build/libs/fineract-pentaho.jar BOOT-INF/lib/
-# NOT java -cp .:lib/*.jar org.springframework.boot.loader.JarLauncher
-java -cp BOOT-INF/classes:BOOT-INF/lib/*.jar org.apache.fineract.ServerApplication
+# ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, we unpack:
+unzip $SRC/../fineract/build/libs/fineract-provider*.jar -d $WORKDIR/fineract
+
+# Now let's add our fineract-pentaho reporting plugin, like so:
+unzip $SRC/build/distributions/fineract-pentaho.zip -d $WORKDIR
+cp $WORKDIR/fineract-pentaho/lib/*.jar $WORKDIR/fineract/BOOT-INF/lib/
+
+# Start!
+java -cp $WORKDIR/fineract/BOOT-INF/classes:$WORKDIR/fineract/BOOT-INF/lib/* org.apache.fineract.ServerApplication

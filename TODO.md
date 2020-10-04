@@ -1,5 +1,7 @@
 # TODO
 
+1. make hard-coded `~/.mifosx/pentahoReports` configurable?
+
 1. inherit dependency management from Fineract, so that e.g.
    JAX RS & commons lang versions don't have to be repeated.
    Actually, perhaps JAX RS & commons lang should be considered
