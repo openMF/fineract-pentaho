@@ -29,6 +29,4 @@ see [TODO](TODO.md) for possible future follow-up enhancement work.
 
 1. add minimal documentation above (e.g. `java -jar f.jar;fineract-pentaho.jar` ?)
 
-1. fix Java file license header and `LICENSE` file discrepancy..
-
 1. make hard-coded `~/.mifosx/pentahoReports` configurable?

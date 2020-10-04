@@ -14,4 +14,5 @@ cd $WORKDIR
 # ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, let's:
 jar -xvf $SRC/../fineract/build/libs/fineract-provider*.jar
 cp $SRC/build/libs/fineract-pentaho.jar BOOT-INF/lib/
-java -cp . org.springframework.boot.loader.JarLauncher
+# NOT java -cp .:lib/*.jar org.springframework.boot.loader.JarLauncher
+java -cp BOOT-INF/classes:BOOT-INF/lib/*.jar org.apache.fineract.ServerApplication
