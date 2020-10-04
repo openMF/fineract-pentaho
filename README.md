@@ -1,5 +1,3 @@
-_**THIS IS WIP AND DOES NOT WORK, YET...**_
-
 # Pentaho Reporting Plugin for Apache Fineract
 
 see https://github.com/vorburger/fineract-pentaho for source code.
