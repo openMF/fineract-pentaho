@@ -7,12 +7,11 @@ WORKDIR=/tmp/$$
 rm -rf $WORKDIR
 mkdir -p $WORKDIR/fineract
 
-# ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, we unpack:
-unzip $SRC/../fineract/build/libs/fineract-provider*.jar -d $WORKDIR/fineract
+# Copy to a fixed name (because java -cp can't expand /*.jar wildcards, only /*)
+cp $SRC/../fineract/build/libs/fineract-provider*.jar $WORKDIR/fineract-provider.jar
 
 # Now let's add our fineract-pentaho reporting plugin, like so:
 unzip $SRC/build/distributions/fineract-pentaho.zip -d $WORKDIR
-cp $WORKDIR/fineract-pentaho/lib/*.jar $WORKDIR/fineract/BOOT-INF/lib/
 
 # Start!
-java -cp "$WORKDIR/fineract/BOOT-INF/classes:$WORKDIR/fineract/BOOT-INF/lib/*" org.apache.fineract.ServerApplication
+java -cp "$WORKDIR/fineract-provider.jar:$WORKDIR/fineract-pentaho/lib/*" org.springframework.boot.loader.JarLauncher
