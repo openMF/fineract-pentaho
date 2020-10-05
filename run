@@ -15,4 +15,4 @@ unzip $SRC/build/distributions/fineract-pentaho.zip -d $WORKDIR
 cp $WORKDIR/fineract-pentaho/lib/*.jar $WORKDIR/fineract/BOOT-INF/lib/
 
 # Start!
-java -cp $WORKDIR/fineract/BOOT-INF/classes:$WORKDIR/fineract/BOOT-INF/lib/* org.apache.fineract.ServerApplication
+java -cp "$WORKDIR/fineract/BOOT-INF/classes:$WORKDIR/fineract/BOOT-INF/lib/*" org.apache.fineract.ServerApplication
