@@ -11,6 +11,10 @@ repositories {
     // maven { url 'https://nexus.pentaho.org/content/groups/omni/' }
     // https://github.com/pentaho/mondrian/issues/1054
     // https://jira.pentaho.com/browse/PDI-18983
+    // TODO: @vidakovic just temporarily until we are able to publish to Maven Central
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencyManagement {
@@ -45,7 +49,8 @@ dependencyManagement {
 dependencies {
     compileOnly(
         // Fineract!
-        files("../fineract/build/classes/java/main/"),
+        'org.apache.fineract:fineract-api:1.5.0',
+        // files("../fineract/build/classes/java/main/"),
 
         // Fineract dependencies (TODO version should *NOT* be specified here...)
         'org.slf4j:slf4j-api:1.7.30',
