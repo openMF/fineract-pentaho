@@ -45,7 +45,7 @@ dependencyManagement {
 dependencies {
     compileOnly(
         // Fineract!
-        files("../fineract/build/classes/java/main/"),
+        files("../fineract/fineract-provider/build/classes/java/main/"),
 
         // Fineract dependencies (TODO version should *NOT* be specified here...)
         'org.slf4j:slf4j-api:1.7.30',

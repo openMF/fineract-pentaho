@@ -8,7 +8,7 @@ rm -rf $WORKDIR
 mkdir -p $WORKDIR/fineract
 
 # ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, we unpack:
-unzip $SRC/../fineract/build/libs/fineract-provider*.jar -d $WORKDIR/fineract
+unzip $SRC/../fineract/fineract-provider/build/libs/fineract-provider*.jar -d $WORKDIR/fineract
 
 # Now let's add our fineract-pentaho reporting plugin, like so:
 unzip $SRC/build/distributions/fineract-pentaho.zip -d $WORKDIR
