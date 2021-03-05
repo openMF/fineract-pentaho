@@ -190,7 +190,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
         }
     }
 
-    private Map<String, String> getReportParams(final MultivaluedMap<String, String> queryParams) {
+    public Map<String, String> getReportParams(final MultivaluedMap<String, String> queryParams) {
         final Map<String, String> reportParams = new HashMap<>();
         final var keys = queryParams.keySet();
         String pKey;
