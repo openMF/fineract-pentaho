@@ -76,6 +76,32 @@ dependencies {
         'pentaho-library:libsparkline',
         'pentaho-library:libxml'
     )
+    
+    testImplementation(
+    	'org.junit.jupiter:junit-jupiter-api:5.6.2',
+    	'com.google.truth:truth:1.1.2',
+		'com.google.truth.extensions:truth-java8-extension:1.1.2',
+	)
+    
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
+
+	// TODO remove after https://issues.apache.org/jira/browse/FINERACT-1102, when fineract-client is available as an artfefact
+    testImplementation(
+        files("../fineract/fineract-client/build/classes/java/main/"),
+		// copy/paste from fineract/fineract-client/dependencies.gradle and fineract/dependencies.gradle     
+	    'com.squareup.retrofit2:retrofit:2.9.0',
+	    'com.squareup.retrofit2:adapter-java8:2.9.0',
+	    'com.squareup.retrofit2:adapter-rxjava2:2.9.0', // TODO https://github.com/OpenAPITools/openapi-generator/issues/7758
+	    'com.squareup.retrofit2:converter-scalars:2.9.0',
+	    'com.squareup.retrofit2:converter-gson:2.9.0',
+	    'io.gsonfire:gson-fire:1.8.5',
+	    'com.squareup.okhttp3:logging-interceptor:4.9.0',
+    )
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
 distributions {

@@ -31,6 +31,8 @@ the SQL query in that particular report is currently actually broken), but this 
 that the integration of Pentaho as a Fineract Plugin basically works.
 ([FINERACT-1176](https://issues.apache.org/jira/browse/FINERACT-1176) tracks improving API response.)
 
+See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
+
 
 ## Contribute
 
