@@ -2,7 +2,7 @@
 
 see https://github.com/vorburger/fineract-pentaho for source code.
 
-see https://issues.apache.org/jira/browse/FINERACT-1127 for background.
+This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/develop/fineract-doc/src/docs/en/deployment.adoc).
 
 see [TODO](TODO.md) for possible future follow-up enhancement work.
 
@@ -17,10 +17,7 @@ older versions may be possible, but is not tested or documented here.
     cd fineract && ./gradlew bootJar && cd ..
 
     git clone https://github.com/vorburger/fineract-pentaho.git
-    cd fineract-pentaho && ./gradlew distZip && cd ..
-
-    mkdir -p ~/.mifosx/pentahoReports/
-    cp ./fineract-pentaho/pentahoReports/* ~/.mifosx/pentahoReports/
+    cd fineract-pentaho && ./gradlew -x test distZip && cd ..
 
     ./fineract-pentaho/run
 
@@ -30,6 +27,19 @@ The API call (above) will fail on the server (see log) due to an intern error (s
 the SQL query in that particular report is currently actually broken), but this illustrates
 that the integration of Pentaho as a Fineract Plugin basically works.
 ([FINERACT-1176](https://issues.apache.org/jira/browse/FINERACT-1176) tracks improving API response.)
+
+The [`run`](run) script is for Linux, but it should hopefully be easy to create
+an equivalent `run.bat` script for Windows users - please contribute it with a PR if you do!
+That script basically just creates the following directory structure:
+
+    fineract-provider.jar
+    lib/fineract-pentaho.jar
+    lib/pentaho-reporting-*.jar
+    lib/lib*.jar
+
+and then launches Apache Fineract with the Pentaho Plugin and all its JARs like this:
+
+    java -Dloader.path=lib/ -jar fineract-provider.jar
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
 

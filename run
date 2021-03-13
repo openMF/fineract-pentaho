@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-# Prepare
-SRC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-WORKDIR=/tmp/$$
-rm -rf $WORKDIR
-mkdir -p $WORKDIR/fineract
+# Copy Apache Fineract JAR
+mkdir build/run
+cp ../fineract/fineract-provider/build/libs/fineract-provider*.jar build/run
 
-# ... inspired by https://github.com/apache/fineract/blob/develop/Dockerfile, we unpack:
-unzip $SRC/../fineract/fineract-provider/build/libs/fineract-provider*.jar -d $WORKDIR/fineract
+# Add our fineract-pentaho reporting plugin, like so:
+unzip build/distributions/fineract-pentaho.zip -d build/run/
+rm build/run/fineract-pentaho.jar
 
-# Now let's add our fineract-pentaho reporting plugin, like so:
-unzip $SRC/build/distributions/fineract-pentaho.zip -d $WORKDIR
-cp $WORKDIR/fineract-pentaho/lib/*.jar $WORKDIR/fineract/BOOT-INF/lib/
+mkdir -p ~/.mifosx/pentahoReports/
+cp build/run/pentahoReports/* ~/.mifosx/pentahoReports/
+rm -rf build/run/pentahoReports
 
 # Start!
-java -cp "$WORKDIR/fineract/BOOT-INF/classes:$WORKDIR/fineract/BOOT-INF/lib/*" org.apache.fineract.ServerApplication
+java -Dloader.path=build/run/lib/ -jar build/run/fineract-provider.jar

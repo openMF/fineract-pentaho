@@ -107,15 +107,22 @@ tasks.named('test') {
 distributions {
     main {
         contents {
-            from 'README.md', 'LICENSE', 'run'
-            into('pentahoReports') {
+        	into('/') {
+            	from 'README.md', 'LICENSE', 'run*'
+            }
+            
+            into('/pentahoReports') {
             	from { 'pentahoReports' }
             }
 
             // Add fineract-pentaho.jar into lib/ just so it's easier to install
             // TODO exclude fineract-pentaho.jar at ZIP root (it's currently twice in the dist ZIP, at ./ and lib/) 
-            into('lib') {
+            into('/lib') {
                 from(jar)
+            }
+        
+            eachFile { FileCopyDetails fcp ->
+              fcp.relativePath = new RelativePath(true, fcp.relativePath.pathString.replace('fineract-pentaho/', ''))
             }
         }
     }

@@ -9,3 +9,6 @@ build
 .classpath
 .settings/
 bin/
+
+# Ignore Fineract/Spring Boot runtime files
+keystore.jks
