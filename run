@@ -2,11 +2,11 @@
 set -euxo pipefail
 
 # Copy Apache Fineract JAR
-mkdir build/run
-cp ../fineract/fineract-provider/build/libs/fineract-provider*.jar build/run
+mkdir -p build/run
+cp fineract/fineract-provider/build/libs/fineract-provider*.jar build/run
 
 # Add our fineract-pentaho reporting plugin, like so:
-unzip build/distributions/fineract-pentaho.zip -d build/run/
+unzip fineract-pentaho/build/distributions/fineract-pentaho.zip -d build/run/
 rm build/run/fineract-pentaho.jar
 
 mkdir -p ~/.mifosx/pentahoReports/
