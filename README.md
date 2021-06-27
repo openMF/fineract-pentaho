@@ -2,7 +2,8 @@
 
 see https://github.com/vorburger/fineract-pentaho for source code.
 
-This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/develop/fineract-doc/src/docs/en/deployment.adoc).
+This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/develop/fineract-doc/src/docs/en/deployment.adoc). 
+(This code lives here instead of being part of the core Apache Fineract repository because of [software licenses](#license).)
 
 see [TODO](TODO.md) for possible future follow-up enhancement work.
 
@@ -49,6 +50,19 @@ and then launches Apache Fineract with the Pentaho Plugin and all its JARs like 
     java -Dloader.path=lib/ -jar fineract-provider.jar
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
+
+
+## License
+
+This code used to be part of the Mifos codebase before it became Apache Fineract.
+During that move, the Pentaho related code had to be removed, because Pentaho's license
+prevents code using it from being part of an Apache Software Foundation hosted project.
+
+The correct technical solution to resolve such conundrums is to use a plugin architecture - which is what this is.
+
+Note that the code and report templates in this git repo itself are
+[licensed to you under the Mozilla Public License 2.0 (MPL)](https://github.com/openMF/fineract-pentaho/blob/develop/LICENSE).
+This is a separate question than the license that Pentaho itself (i.e. the JAR/s of Pentaho) are made available under.
 
 
 ## Contribute
