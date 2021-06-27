@@ -17,7 +17,7 @@ project.ext.pentahoVersion = '7.0.0.6-95'
 
 dependencyManagement {
     dependencies {
-
+        dependency 'org.openjdk.nashorn:nashorn-core:15.1'
         dependencySet(group: 'pentaho-reporting-engine', version: pentahoVersion) {
             entry 'pentaho-reporting-engine-classic-core'
             entry 'pentaho-reporting-engine-classic-extensions'
@@ -76,7 +76,9 @@ dependencies {
         'pentaho-library:librepository',
         'pentaho-library:libserializer',
         'pentaho-library:libsparkline',
-        'pentaho-library:libxml'
+        'pentaho-library:libxml',
+
+        'org.openjdk.nashorn:nashorn-core'
     )
     
     testImplementation(
