@@ -13,11 +13,13 @@ repositories {
     // https://jira.pentaho.com/browse/PDI-18983
 }
 
+project.ext.pentahoVersion = '7.0.0.6-95'
+
 dependencyManagement {
     dependencies {
-        dependency 'pentaho-reporting-engine:pentaho-reporting-engine-classic-core:3.9.1-GA'
-
-        dependencySet(group: 'pentaho-reporting-engine', version: '3.9.1-GA') {
+        dependency 'org.openjdk.nashorn:nashorn-core:15.1'
+        dependencySet(group: 'pentaho-reporting-engine', version: pentahoVersion) {
+            entry 'pentaho-reporting-engine-classic-core'
             entry 'pentaho-reporting-engine-classic-extensions'
             entry 'pentaho-reporting-engine-classic-extensions-scripting'
             entry 'pentaho-reporting-engine-wizard-core'
@@ -27,7 +29,7 @@ dependencyManagement {
             entry 'pentaho-reporting-engine-wizard-xul'
         }
 */
-        dependencySet(group: 'pentaho-library', version: '1.2.8') {
+        dependencySet(group: 'pentaho-library', version: pentahoVersion) {
             entry 'libbase'
             entry 'libdocbundle'
             entry 'libfonts'
@@ -74,7 +76,9 @@ dependencies {
         'pentaho-library:librepository',
         'pentaho-library:libserializer',
         'pentaho-library:libsparkline',
-        'pentaho-library:libxml'
+        'pentaho-library:libxml',
+
+        'org.openjdk.nashorn:nashorn-core'
     )
     
     testImplementation(
