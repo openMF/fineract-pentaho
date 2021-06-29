@@ -10,5 +10,8 @@ build
 .settings/
 bin/
 
+# IntelliJ IDEA
+.idea
+
 # Ignore Fineract/Spring Boot runtime files
 keystore.jks
