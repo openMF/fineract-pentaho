@@ -2,7 +2,7 @@
 
 rem Copy Apache Fineract JAR
 md build\run
-copy ..\fineract\fineract-provider\build\libs\fineract-provider.jar build\run
+copy .\fineract\fineract-provider\build\libs\fineract-provider.jar build\run
 
 rem Add our fineract-pentaho reporting plugin, like so:
 
