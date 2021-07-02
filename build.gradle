@@ -7,7 +7,9 @@ plugins {
 repositories {
     jcenter()
 
-    maven { url 'https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/' }
+    maven { url 'https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/'  }
+    maven { url 'https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/'  }
+    
     // maven { url 'https://nexus.pentaho.org/content/groups/omni/' }
     // https://github.com/pentaho/mondrian/issues/1054
     // https://jira.pentaho.com/browse/PDI-18983
@@ -19,6 +21,7 @@ apply plugin: 'war'
 dependencyManagement {
     dependencies {
         dependency 'org.openjdk.nashorn:nashorn-core:15.1'
+        dependency 'org.codehaus.groovy:groovy-all:3.0.8'
         dependencySet(group: 'pentaho-reporting-engine', version: pentahoVersion) {
             entry 'pentaho-reporting-engine-classic-core'
             entry 'pentaho-reporting-engine-classic-extensions'
@@ -79,7 +82,8 @@ dependencies {
         'pentaho-library:libsparkline',
         'pentaho-library:libxml',
 
-        'org.openjdk.nashorn:nashorn-core'
+        'org.openjdk.nashorn:nashorn-core',
+        'org.codehaus.groovy:groovy-all'
     )
     
     testImplementation(
