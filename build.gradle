@@ -14,6 +14,7 @@ repositories {
 }
 
 project.ext.pentahoVersion = '7.0.0.6-95'
+apply plugin: 'war'
 
 dependencyManagement {
     dependencies {
@@ -123,6 +124,10 @@ distributions {
             // TODO exclude fineract-pentaho.jar at ZIP root (it's currently twice in the dist ZIP, at ./ and lib/) 
             into('/lib') {
                 from(jar)
+            }
+
+            into('/lib') {
+                from(war)
             }
         
             eachFile { FileCopyDetails fcp ->
