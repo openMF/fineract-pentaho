@@ -49,7 +49,7 @@ To test this you can any REST Client tool (like Postman) with the following para
 Method : GET
 URL : https://localhost:8443/fineract-provider/api/v1/runreports/Expected%20Payments%20By%20Date%20-%20Formatted?R_endDate=2013-04-30&R_loanOfficerId=-1&R_officeId=1&R_startDate=2013-04-16&output-type=PDF&R_officeId=1
 
-HEADERS
+**HEADERS**
 Fineract-Platform-TenantId: default
 Content-Type: application/json
 
