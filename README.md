@@ -62,7 +62,7 @@ then this Fineract Pentaho Plugin has not been correctly registered & loaded by 
 
 
 
-## WHAT BOTH SCRIPTS DO IN BASIC TERMS
+## What both scripts do
 
 Both scripts (windows and Linux alike) basically just creates the following directory structure:
 
