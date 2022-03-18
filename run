@@ -14,4 +14,4 @@ cp build/run/pentahoReports/* ~/.mifosx/pentahoReports/
 rm -rf build/run/pentahoReports
 
 # Start!
-java -Dloader.path=build/run/lib/ -jar build/run/fineract-provider.jar
+java -Dloader.path=build/run/lib/ -jar build/run/fineract-provider*.jar

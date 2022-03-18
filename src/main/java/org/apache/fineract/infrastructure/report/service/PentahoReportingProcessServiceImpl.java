@@ -15,8 +15,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.infrastructure.core.api.ApiParameterHelper;
-import org.apache.fineract.infrastructure.core.boot.JDBCDriverConfig;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
+import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
+import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
@@ -34,7 +35,9 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,14 +48,13 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
     public static final String MIFOS_BASE_DIR = System.getProperty("user.home") + File.separator + ".mifosx";
 
     private final PlatformSecurityContext context;
+    private final DataSource tenantDataSource;
 
     @Autowired
-    private JDBCDriverConfig driverConfig;
-
-    @Autowired
-    public PentahoReportingProcessServiceImpl(final PlatformSecurityContext context) {
+    public PentahoReportingProcessServiceImpl(final PlatformSecurityContext context,
+final @Qualifier("hikariTenantDataSource") DataSource tenantDataSource) {
         ClassicEngineBoot.getInstance().start();
-
+        this.tenantDataSource = tenantDataSource;
         this.context = context;
     }
 
@@ -167,7 +169,8 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             // and data scoping
             final var tenant = ThreadLocalContextUtil.getTenant();
             final var tenantConnection = tenant.getConnection();
-            var tenantUrl = driverConfig.constructProtocol(tenantConnection.getSchemaServer(), tenantConnection.getSchemaServerPort(),
+            String protocol = toProtocol(this.tenantDataSource);
+            var tenantUrl = toJdbcUrl(protocol ,tenantConnection.getSchemaServer(), tenantConnection.getSchemaServerPort(),
                     tenantConnection.getSchemaName(), tenantConnection.getSchemaConnectionParameters());
             final var userhierarchy = currentUser.getOffice().getHierarchy();
             var outPutInfo4 = "db URL:" + tenantUrl + "      userhierarchy:" + userhierarchy;
