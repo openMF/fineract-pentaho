@@ -55,7 +55,7 @@ dependencies {
 
         // Fineract dependencies (TODO version should *NOT* be specified here...)
         'org.slf4j:slf4j-api:1.7.30',
-        'org.apache.openjpa:openjpa:3.1.2',
+        'org.apache.openjpa:openjpa:3.2.2',
         'org.apache.commons:commons-lang3:3.10',
         'org.springframework:spring-context:5.2.6.RELEASE',
         'org.springframework.security:spring-security-core:5.3.4.RELEASE',
