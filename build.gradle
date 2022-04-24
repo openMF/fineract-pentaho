@@ -20,7 +20,7 @@ apply plugin: 'war'
 
 dependencyManagement {
     dependencies {
-        dependency 'org.openjdk.nashorn:nashorn-core:15.1'
+        dependency 'org.openjdk.nashorn:nashorn-core:15.4'
         dependency 'org.codehaus.groovy:groovy-all:3.0.8'
         dependencySet(group: 'pentaho-reporting-engine', version: pentahoVersion) {
             entry 'pentaho-reporting-engine-classic-core'
