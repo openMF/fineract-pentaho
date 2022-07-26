@@ -81,7 +81,7 @@ dependencies {
         'pentaho-library:libserializer',
         'pentaho-library:libsparkline',
         'pentaho-library:libxml',
-
+        'org.apache.poi:poi-ooxml:3.10-FINAL',
         'org.openjdk.nashorn:nashorn-core',
         'org.codehaus.groovy:groovy-all'
     )
