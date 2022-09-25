@@ -59,7 +59,7 @@ dependencies {
         'org.apache.commons:commons-lang3:3.10',
         'org.springframework:spring-context:5.2.6.RELEASE',
         'org.springframework.security:spring-security-core:5.3.4.RELEASE',
-        'org.springframework.data:spring-data-commons:2.3.4.RELEASE',
+        'org.springframework.data:spring-data-commons:2.7.3',
         'javax.ws.rs:jsr311-api:1.1.1',
     )
 
