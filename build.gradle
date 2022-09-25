@@ -93,7 +93,7 @@ dependencies {
 	)
     
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.36'
 
 	// TODO remove after https://issues.apache.org/jira/browse/FINERACT-1102, when fineract-client is available as an artfefact
     testImplementation(
