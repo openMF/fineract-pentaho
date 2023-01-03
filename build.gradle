@@ -111,7 +111,7 @@ artifactory {
       password = "${findProperty('fineract.config.password')}"       //The publisher password or API key
     }
     defaults {
-        publications ('ivyJava','mavenJava','foo')
+        publications ('mavenJava','foo')
         publishConfigs('archives', 'published')                   
         publishBuildInfo = true   //Publish build-info to Artifactory (true by default)
         publishArtifacts = true   //Publish artifacts to Artifactory (true by default)
