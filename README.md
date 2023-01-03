@@ -13,36 +13,41 @@ This project is currently only tested against the very latest and greatest
 bleeding edge Fineract `develop` branch on Linux Ubuntu 20.04LTS. Building and using it against
 other versions may be possible, but is not tested or documented here.
 
+1. Download and compile
+
+```bash
     git clone https://github.com/openMF/fineract-pentaho.git
     cd fineract-pentaho && ./gradlew -x test distZip && cd ..
+```
+2. Export the Location of Pentaho Reports (prpt files) in a variable required by the Plugin
 
-    cp ./fineract-pentaho/pentahoReports/* ~/.mifosx/pentahoReports/
+```bash
+    export FINERACT_PENTAHO_REPORTS_PATH="$PWD/fineract-pentaho/pentahoReports/"
+```    
 
-    ./fineract-pentaho/run
+3. Execute Apache Fineract with the location of the Mifos Pentaho Plugin library for Apache Fineract
 
+```bash
+java -Dloader.path=$PWD/fineract-pentaho/build/libs/ -jar build/libs/fineract-provider.jar
+```
+
+4. Test the Pentaho Reports Execution using the following curl example or through the Mifos Web App in the Reports Menu
+
+```bash
     curl --location --request GET 'https://localhost:8443/fineract-provider/api/v1/runreports/Expected%20Payments%20By%20Date%20-%20Formatted?tenantIdentifier=default&locale=en&dateFormat=dd%20MMMM%20yyyy&R_startDate=01%20January%202022&R_endDate=02%20January%202023&R_officeId=1&output-type=PDF&R_loanOfficerId=-1' \
 --header 'Fineract-Platform-TenantId: default' \
 --header 'Authorization: Basic bWlmb3M6cGFzc3dvcmQ='
+```
 
 The API call (above) should not fail if you follow the steps as shown, and all conditions met for the version of Apache Fineract
-
-
-**HEADERS**
-Fineract-Platform-TenantId: default
-Content-Type: application/json
-
-Authorization: Basic bWlmb3M6cGFzc3dvcmQ=    i.e. (username = mifos & password = password)
-
 
 If the API call (above) [fails with](https://issues.apache.org/jira/browse/FINERACT-1173) 
 _`"There is no ReportingProcessService registered in the ReportingProcessServiceProvider for this report type: Pentaho"`_, 
 then this Fineract Pentaho Plugin has not been correctly registered & loaded by Apache Fineract.
 
-
-
 ## What both scripts do
 
-Both scripts (windows and Linux alike) basically just creates the following directory structure:
+The script basically just creates the following directory structure:
 
     fineract-provider.jar
     lib/fineract-pentaho.jar
