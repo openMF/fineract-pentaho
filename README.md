@@ -46,18 +46,50 @@ If the API call (above) [fails with](https://issues.apache.org/jira/browse/FINER
 _`"There is no ReportingProcessService registered in the ReportingProcessServiceProvider for this report type: Pentaho"`_, 
 then this Fineract Pentaho Plugin has not been correctly registered & loaded by Apache Fineract.
 
-## What both scripts do
+## What script does
 
-The script basically just creates the following directory structure:
+The script basically just creates the following directory structure and download the required files by the Pentaho Report Engine and the Database Connection (In this case MySQL):
 
+```bash
     fineract-provider.jar
-    lib/fineract-pentaho.jar
-    lib/pentaho-reporting-*.jar
-    lib/lib*.jar
+    lib/
+        fineract-pentaho-0.0.1-SNAPSHOT-plain.jar
+        mysql-connector-j-8.0.31.jar
+        libswing-9.3.0.0-428.jar
+        libformat-9.3.0.0-428.jar
+        libpixie-9.3.0.0-428.jar
+        classic-core-9.3.0.0-428.jar
+        flute-9.3.0.0-428.jar
+        classic-extensions-scripting-9.3.0.0-428.jar
+        libserializer-9.3.0.0-428.jar
+        libdocbundle-9.3.0.0-428.jar
+        librepository-9.3.0.0-428.jar
+        wizard-core-9.3.0.0-428.jar
+        libformula-9.3.0.0-428.jar
+        libxml-9.3.0.0-428.jar
+        libbase-9.3.0.0-428.jar
+        classic-extensions-9.3.0.0-428.jar
+        libfonts-9.3.0.0-428.jar
+        commons-database-model-9.3.0.0-428.jar
+        libsparkline-9.3.0.0-428.jar
+        libloader-9.3.0.0-428.jar
+        js-scriptengine-22.2.0.jar
+        commons-vfs2-2.7.0.jar
+        groovy-all-2.4.8.jar
+        ehcache-core-2.5.1.jar
+        barcode4j-2.0.jar
+        js-1.7R3.jar
+        bsf-2.4.0.jar
+        barbecue-1.5-beta1.jar
+        graal-sdk-22.2.0.jar
+        js-22.2.0.jar
+```
 
-and then launches Apache Fineract with the Pentaho Plugin and all its JARs like this:
+and then launches Apache Fineract with the Pentaho Plugin and all its dependencias like this:
 
-    java -Dloader.path=lib/ -jar fineract-provider.jar
+```bash
+java -Dloader.path=$MIFOS_PENTAHO_PLUGIN_HOME/lib/ -jar $APACHE_FINERACT_HOME/fineract-provider.jar
+```
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
 
