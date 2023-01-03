@@ -1,11 +1,8 @@
 # Pentaho Reporting Plugin for Apache Fineract
 
-Original work from https://github.com/vorburger/fineract-pentaho.
-
-This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/maintenance/1.6/fineract-doc/src/docs/en/deployment.adoc). 
+This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/maintenance/1.6/fineract-doc/src/docs/en/deployment.adoc). The original work is this one https://github.com/vorburger/fineract-pentaho.
 
 See [TODO](TODO.md) for possible future follow-up enhancement work.
-
 
 ## Build & Use For Linux Users
 
@@ -38,6 +35,10 @@ java -Dloader.path=$PWD/fineract-pentaho/build/libs/ -jar build/libs/fineract-pr
 --header 'Fineract-Platform-TenantId: default' \
 --header 'Authorization: Basic bWlmb3M6cGFzc3dvcmQ='
 ```
+
+5. The output must be a PDF with the Expected Payment By Date Formated information in it (maybe it could have blank or zeroes if it is a fresh Fineract Setup)
+
+![alt text](https://github.com/openMF/fineract-pentaho/blob/1.8/img/screenshot_pentaho_report.png?raw=true)
 
 The API call (above) should not fail if you follow the steps as shown, and all conditions met for the version of Apache Fineract
 
