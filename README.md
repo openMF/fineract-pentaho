@@ -1,79 +1,101 @@
 # Pentaho Reporting Plugin for Apache Fineract
 
-see https://github.com/vorburger/fineract-pentaho for source code.
+This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/maintenance/1.6/fineract-doc/src/docs/en/deployment.adoc). The original work is this one https://github.com/vorburger/fineract-pentaho.
 
-This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/develop/fineract-doc/src/docs/en/deployment.adoc). 
-(This code lives here instead of being part of the core Apache Fineract repository because of [software licenses](#license).)
+See [TODO](TODO.md) for possible future follow-up enhancement work.
 
-see [TODO](TODO.md) for possible future follow-up enhancement work.
+The Pentaho reports has been updated to the version 9.3, please use the [`Pentaho Report Designed version 9.3`](https://sourceforge.net/projects/pentaho/files/Pentaho-9.3/client-tools/prd-ce-9.3.0.0-428.zip/download) 
 
+## Download, Unzip and Use the binaries 
+
+```bash
+    mkdir fineract-pentaho  && cd fineract-pentaho
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/org/mifos/fineract-pentaho/0.0.1-SNAPSHOT/fineract-pentaho-0.0.1-SNAPSHOT.tar
+    tar -xvf fineract-pentaho-0.0.1-SNAPSHOT.tar
+```
 
 ## Build & Use For Linux Users
 
 This project is currently only tested against the very latest and greatest
-bleeding edge Fineract `develop` branch.  Building and using it against
-older versions may be possible, but is not tested or documented here.
+bleeding edge Fineract `develop` branch on Linux Ubuntu 20.04LTS. Building and using it against
+other versions may be possible, but is not tested or documented here.
 
-    git clone https://github.com/apache/fineract.git
-    cd fineract && ./gradlew bootJar && cd ..
+1. Download and compile
 
-    git clone https://github.com/vorburger/fineract-pentaho.git
+```bash
+    git clone https://github.com/openMF/fineract-pentaho.git
     cd fineract-pentaho && ./gradlew -x test distZip && cd ..
+```
+2. Export the Location of Pentaho Reports (prpt files) in a variable required by the Plugin
 
-    mkdir -p ~/.mifosx/pentahoReports/
-    cp ./fineract-pentaho/pentahoReports/* ~/.mifosx/pentahoReports/
+```bash
+    export FINERACT_PENTAHO_REPORTS_PATH="$PWD/fineract-pentaho/pentahoReports/"
+```    
 
-    ./fineract-pentaho/run
+3. Execute Apache Fineract with the location of the Mifos Pentaho Plugin library for Apache Fineract
 
-    curl --insecure --location --request GET 'https://localhost:8443/fineract-provider/api/v1/runreports/Expected%20Payments%20By%20Date%20-%20Formatted?R_endDate=2013-04-30&R_loanOfficerId=-1&R_officeId=1&R_startDate=2013-04-16&output-type=PDF&R_officeId=1' --header 'Fineract-Platform-TenantId: default' --header 'Authorization: Basic bWlmb3M6cGFzc3dvcmQ='
+```bash
+java -Dloader.path=$MIFOS_PENTAHO_PLUGIN_HOME/libs/ -jar $APACHE_FINERACT_HOME/fineract-provider.jar
+```
 
-The API call (above) should not fail if you follow the steps as shown, and all conditions met for the version of fineract
+4. Test the Pentaho Reports Execution using the following curl example or through the Mifos Web App in the Reports Menu
 
-## Build & Use For Windows Users
+```bash
+    curl --location --request GET 'https://localhost:8443/fineract-provider/api/v1/runreports/Expected%20Payments%20By%20Date%20-%20Formatted?tenantIdentifier=default&locale=en&dateFormat=dd%20MMMM%20yyyy&R_startDate=01%20January%202022&R_endDate=02%20January%202023&R_officeId=1&output-type=PDF&R_loanOfficerId=-1' \
+--header 'Fineract-Platform-TenantId: default' \
+--header 'Authorization: Basic bWlmb3M6cGFzc3dvcmQ='
+```
 
-This project is currently only tested against the very latest and greatest bleeding edge Fineract `develop` branch. It works like a charm after ([PR #1671](https://github.com/apache/fineract/pull/1671)). Building and using it against older versions may not work. You might want to cherry pick the changes made in the above PR
+5. The output must be a PDF with the Expected Payment By Date Formated information in it (maybe it could have blank or zeroes if it is a fresh Fineract Setup)
 
-    git clone https://github.com/apache/fineract.git
-    cd fineract && ./gradlew bootJar && cd ..
+![alt text](https://github.com/openMF/fineract-pentaho/blob/1.8/img/screenshot_pentaho_report.png?raw=true)
 
-    git clone https://github.com/vorburger/fineract-pentaho.git
-    cd fineract-pentaho && ./gradlew -x test distZip && cd ..
-
-    mkdir -p ~/.mifosx/pentahoReports/
-    cp ./fineract-pentaho/pentahoReports/* ~/.mifosx/pentahoReports/
-
-    ./fineract-pentaho/run.bat
-
-To test this you can any REST Client tool (like Postman) with the following parameters
-
-Method : GET
-URL : https://localhost:8443/fineract-provider/api/v1/runreports/Expected%20Payments%20By%20Date%20-%20Formatted?R_endDate=2013-04-30&R_loanOfficerId=-1&R_officeId=1&R_startDate=2013-04-16&output-type=PDF&R_officeId=1
-
-**HEADERS**
-Fineract-Platform-TenantId: default
-Content-Type: application/json
-
-Authorization: Basic bWlmb3M6cGFzc3dvcmQ=    i.e. (username = mifos & password = password)
-
+The API call (above) should not fail if you follow the steps as shown, and all conditions met for the version of Apache Fineract
 
 If the API call (above) [fails with](https://issues.apache.org/jira/browse/FINERACT-1173) 
 _`"There is no ReportingProcessService registered in the ReportingProcessServiceProvider for this report type: Pentaho"`_, 
 then this Fineract Pentaho Plugin has not been correctly registered & loaded by Apache Fineract.
 
+## What script does
 
+The script basically just creates the following directory structure and download the required files by the Pentaho Report Engine and the Database Connection (In this case MySQL):
 
-## What both scripts do
-
-Both scripts (windows and Linux alike) basically just creates the following directory structure:
-
+```bash
     fineract-provider.jar
-    lib/fineract-pentaho.jar
-    lib/pentaho-reporting-*.jar
-    lib/lib*.jar
+    lib/
+        fineract-pentaho-0.0.1-SNAPSHOT-plain.jar
+        mysql-connector-j-8.0.31.jar
+        libswing-9.3.0.0-428.jar
+        libformat-9.3.0.0-428.jar
+        libpixie-9.3.0.0-428.jar
+        classic-core-9.3.0.0-428.jar
+        flute-9.3.0.0-428.jar
+        classic-extensions-scripting-9.3.0.0-428.jar
+        libserializer-9.3.0.0-428.jar
+        libdocbundle-9.3.0.0-428.jar
+        librepository-9.3.0.0-428.jar
+        wizard-core-9.3.0.0-428.jar
+        libformula-9.3.0.0-428.jar
+        libxml-9.3.0.0-428.jar
+        libbase-9.3.0.0-428.jar
+        classic-extensions-9.3.0.0-428.jar
+        libfonts-9.3.0.0-428.jar
+        commons-database-model-9.3.0.0-428.jar
+        libsparkline-9.3.0.0-428.jar
+        libloader-9.3.0.0-428.jar
+        js-scriptengine-22.2.0.jar
+        commons-vfs2-2.7.0.jar
+        groovy-all-2.4.8.jar
+        ehcache-core-2.5.1.jar
+        barcode4j-2.0.jar
+        js-1.7R3.jar
+        bsf-2.4.0.jar
+        barbecue-1.5-beta1.jar
+        graal-sdk-22.2.0.jar
+        js-22.2.0.jar
+```
 
-and then launches Apache Fineract with the Pentaho Plugin and all its JARs like this:
-
-    java -Dloader.path=lib/ -jar fineract-provider.jar
+and then it launches Apache Fineract with the Pentaho Plugin and all its dependencias.
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
 

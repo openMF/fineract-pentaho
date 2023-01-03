@@ -42,8 +42,10 @@ public class PentahoReportsTest {
 
     @Test
     void runExpectedPaymentsPentahoReport() {
-        ResponseBody r = ok(fineract().reportsRun.runReportGetFile("Expected Payments By Date - Formatted", Map.of("R_endDate",
-                "2013-04-30", "R_loanOfficerId", "-1", "R_officeId", "1", "R_startDate", "2013-04-16", "output-type", "PDF"), false));
+        ResponseBody r = ok(fineract().reportsRun.runReportGetFile("Expected Payments By Date - Formatted", 
+                        Map.of("tenantIdentifier","default", "locale","en","dateFormat", "dd MMMM yyyy", 
+                            "R_startDate", "01 January 2022", "R_endDate", "02 January 2023","R_officeId", "1",
+                            "output-type", "PDF", "R_loanOfficerId", "-1"), false));
         Truth.assertThat(r.contentType()).isEqualTo(MediaType.get("application/pdf"));
     }
 

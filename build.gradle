@@ -1,113 +1,73 @@
 plugins {
-	id 'java-library'
-	id 'java-library-distribution'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.7.4'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'java-library'
+    id 'java-library-distribution'
+    id 'com.jfrog.artifactory' version '4.31.0'
 }
 
-repositories {
-    jcenter()
+group = 'org.mifos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
-    maven { url 'https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/'  }
-    maven { url 'https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/'  }
-    
-    // maven { url 'https://nexus.pentaho.org/content/groups/omni/' }
-    // https://github.com/pentaho/mondrian/issues/1054
-    // https://jira.pentaho.com/browse/PDI-18983
-}
-
-project.ext.pentahoVersion = '7.0.0.6-95'
-apply plugin: 'war'
-
-dependencyManagement {
-    dependencies {
-        dependency 'org.openjdk.nashorn:nashorn-core:15.1'
-        dependency 'org.codehaus.groovy:groovy-all:3.0.8'
-        dependencySet(group: 'pentaho-reporting-engine', version: pentahoVersion) {
-            entry 'pentaho-reporting-engine-classic-core'
-            entry 'pentaho-reporting-engine-classic-extensions'
-            entry 'pentaho-reporting-engine-classic-extensions-scripting'
-            entry 'pentaho-reporting-engine-wizard-core'
-        }
-/*
-        dependencySet(group: 'pentaho-report-designer', version: '3.9.1-GA') {
-            entry 'pentaho-reporting-engine-wizard-xul'
-        }
-*/
-        dependencySet(group: 'pentaho-library', version: pentahoVersion) {
-            entry 'libbase'
-            entry 'libdocbundle'
-            entry 'libfonts'
-            entry 'libformat'
-            entry 'libformula'
-            entry 'libloader'
-            entry 'librepository'
-            entry 'libserializer'
-            entry 'libsparkline'
-            entry 'libxml'
-        }
+repositories {    
+    maven {
+        url "https://mifos.jfrog.io/artifactory/libs-snapshot-local"
+    }    
+    maven { 
+        url "https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/"
     }
+    mavenCentral()
 }
 
 dependencies {
-    compileOnly(
-        // Fineract!
-        files("../fineract/fineract-provider/build/classes/java/main/"),
-
-        // Fineract dependencies (TODO version should *NOT* be specified here...)
-        'org.slf4j:slf4j-api:1.7.30',
-        'org.apache.openjpa:openjpa:3.1.2',
-        'org.apache.commons:commons-lang3:3.10',
-        'org.springframework:spring-context:5.2.6.RELEASE',
-        'org.springframework.security:spring-security-core:5.3.4.RELEASE',
-        'org.springframework.data:spring-data-commons:2.3.4.RELEASE',
-        'javax.ws.rs:jsr311-api:1.1.1',
-    )
-
-    implementation(
-        // Pentaho..
-        'pentaho-reporting-engine:pentaho-reporting-engine-classic-core',
-        'pentaho-reporting-engine:pentaho-reporting-engine-classic-extensions',
-        'pentaho-reporting-engine:pentaho-reporting-engine-classic-extensions-scripting',
-        'pentaho-reporting-engine:pentaho-reporting-engine-wizard-core',
-        // N/A: 'pentaho-report-designer:pentaho-reporting-engine-wizard-xul',
-
-        'pentaho-library:libbase',
-        'pentaho-library:libdocbundle',
-        'pentaho-library:libfonts',
-        'pentaho-library:libformat',
-        'pentaho-library:libformula',
-        'pentaho-library:libloader',
-        'pentaho-library:librepository',
-        'pentaho-library:libserializer',
-        'pentaho-library:libsparkline',
-        'pentaho-library:libxml',
-        'org.apache.poi:poi-ooxml:3.10-FINAL',
-        'org.openjdk.nashorn:nashorn-core',
-        'org.codehaus.groovy:groovy-all'
-    )
-    
-    testImplementation(
-    	'org.junit.jupiter:junit-jupiter-api:5.6.2',
-    	'com.google.truth:truth:1.1.2',
-		'com.google.truth.extensions:truth-java8-extension:1.1.2',
-	)
-    
+    compileOnly 'org.springframework.boot:spring-boot-starter-actuator'
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compileOnly 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.springframework.boot:spring-boot-starter-security'
+    compileOnly 'jakarta.ws.rs:jakarta.ws.rs-api'
+    compileOnly 'org.apache.commons:commons-lang3'
+    compileOnly 'org.eclipse.persistence:eclipselink:2.7.10'
+    //Apache Fineract Provider
+    compileOnly 'org.apache.fineract:fineract-provider:0.0.0-0f0010d1-SNAPSHOT'
+    //Pentaho Reporting Engine
+    implementation 'org.pentaho.reporting.engine:classic-core:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.engine:classic-extensions:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.engine:classic-extensions-scripting:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.engine:wizard-core:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libbase:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libxml:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libserializer:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:librepository:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libloader:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libformula:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libformat:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libfonts:9.3.0.0-428'
+    implementation 'org.pentaho.reporting.library:libdocbundle:9.3.0.0-428'
+    implementation 'org.graalvm.js:js:22.2.0'
+    implementation 'org.graalvm.js:js-scriptengine:22.2.0'
+    //Apache Fineract Client for Testing
+    testImplementation 'org.apache.fineract:fineract-client:0.0.0-0f0010d1-SNAPSHOT'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+    testImplementation 'com.google.truth:truth:1.1.2'
+    testImplementation'com.google.truth.extensions:truth-java8-extension:1.1.2'    
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
-
-	// TODO remove after https://issues.apache.org/jira/browse/FINERACT-1102, when fineract-client is available as an artfefact
-    testImplementation(
-        files("../fineract/fineract-client/build/classes/java/main/"),
-		// copy/paste from fineract/fineract-client/dependencies.gradle and fineract/dependencies.gradle     
-	    'com.squareup.retrofit2:retrofit:2.9.0',
-	    'com.squareup.retrofit2:adapter-java8:2.9.0',
-	    'com.squareup.retrofit2:adapter-rxjava2:2.9.0', // TODO https://github.com/OpenAPITools/openapi-generator/issues/7758
-	    'com.squareup.retrofit2:converter-scalars:2.9.0',
-	    'com.squareup.retrofit2:converter-gson:2.9.0',
-	    'io.gsonfire:gson-fire:1.8.5',
-	    'com.squareup.okhttp3:logging-interceptor:4.9.0',
-    )
+    testImplementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    testImplementation 'com.squareup.retrofit2:adapter-java8:2.9.0'
+    testImplementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    testImplementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    testImplementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    testImplementation 'io.gsonfire:gson-fire:1.8.5'
+    testImplementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }
+
+apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 tasks.named('test') {
     useJUnitPlatform()
@@ -139,4 +99,37 @@ distributions {
             }
         }
     }
+}
+artifactory {
+  contextUrl = 'https://mifos.jfrog.io/artifactory'   //The base Artifactory URL if not overridden by the publisher/resolver
+  publish {
+    contextUrl = 'https://mifos.jfrog.io/artifactory'   //The base Artifactory URL for the publisher
+    //A closure defining publishing information
+    repository {
+      repoKey = 'libs-snapshot-local'   //The Artifactory repository key to publish to
+      username = "${findProperty('fineract.config.username')}"          //The publisher user name
+      password = "${findProperty('fineract.config.password')}"       //The publisher password or API key
+    }
+    defaults {
+        publications ('ivyJava','mavenJava','foo')
+        publishConfigs('archives', 'published')                   
+        publishBuildInfo = true   //Publish build-info to Artifactory (true by default)
+        publishArtifacts = true   //Publish artifacts to Artifactory (true by default)
+        publishPom = true   //Publish generated POM files to Artifactory (true by default).
+    }
+  }
+  clientConfig.timeout = 600 // Artifactory connection timeout (in seconds). The default timeout is 300 seconds.
+  clientConfig.setInsecureTls(false) // Set to true to skip TLS certificates verification (false by default).
+}
+
+artifactoryPublish {
+    skip = false //Skip build info analysis and publishing (false by default)
+    contextUrl = 'https://mifos.jfrog.io/artifactory'
+    clientConfig.publisher.repoKey = 'libs-snapshot-local'
+    clientConfig.publisher.username = "${findProperty('fineract.config.username')}"
+    clientConfig.publisher.password = "${findProperty('fineract.config.password')}"
+
+    clientConfig.publisher.setFilterExcludedArtifactsFromBuild(true) // Set to true to avoid adding the filtered artifacts to the build-info.
+    // Minimum file size in KB for which the plugin performs checksum deploy optimization. Default: 10. Set to 0 to disable uploading files with checksum that already exists in Artifactory.
+    clientConfig.publisher.minChecksumDeploySizeKb = 10
 }
