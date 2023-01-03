@@ -25,7 +25,7 @@ other versions may be possible, but is not tested or documented here.
 3. Execute Apache Fineract with the location of the Mifos Pentaho Plugin library for Apache Fineract
 
 ```bash
-java -Dloader.path=$PWD/fineract-pentaho/build/libs/ -jar $APACHE_FINERACT_HOME/build/libs/fineract-provider.jar
+java -Dloader.path=$MIFOS_PENTAHO_PLUGIN_HOME/libs/ -jar $APACHE_FINERACT_HOME/fineract-provider.jar
 ```
 
 4. Test the Pentaho Reports Execution using the following curl example or through the Mifos Web App in the Reports Menu
@@ -85,11 +85,7 @@ The script basically just creates the following directory structure and download
         js-22.2.0.jar
 ```
 
-and then launches Apache Fineract with the Pentaho Plugin and all its dependencias like this:
-
-```bash
-java -Dloader.path=$MIFOS_PENTAHO_PLUGIN_HOME/lib/ -jar $APACHE_FINERACT_HOME/fineract-provider.jar
-```
+and then it launches Apache Fineract with the Pentaho Plugin and all its dependencias.
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
 

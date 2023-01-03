@@ -29,9 +29,6 @@ dependencies {
     compileOnly 'org.eclipse.persistence:eclipselink:2.7.10'
     //Apache Fineract Provider
     compileOnly 'org.apache.fineract:fineract-provider:0.0.0-0f0010d1-SNAPSHOT'
-    //Apache Fineract Client for Testing
-    testImplementation 'org.apache.fineract:fineract-client:0.0.0-0f0010d1-SNAPSHOT'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'    
     //Pentaho Reporting Engine
     implementation 'org.pentaho.reporting.engine:classic-core:9.3.0.0-428'
     implementation 'org.pentaho.reporting.engine:classic-extensions:9.3.0.0-428'
@@ -48,6 +45,22 @@ dependencies {
     implementation 'org.pentaho.reporting.library:libdocbundle:9.3.0.0-428'
     implementation 'org.graalvm.js:js:22.2.0'
     implementation 'org.graalvm.js:js-scriptengine:22.2.0'
+    //Apache Fineract Client for Testing
+    testImplementation 'org.apache.fineract:fineract-client:0.0.0-0f0010d1-SNAPSHOT'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+    testImplementation 'com.google.truth:truth:1.1.2'
+    testImplementation'com.google.truth.extensions:truth-java8-extension:1.1.2'    
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
+    testImplementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    testImplementation 'com.squareup.retrofit2:adapter-java8:2.9.0'
+    testImplementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    testImplementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    testImplementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    testImplementation 'io.gsonfire:gson-fire:1.8.5'
+    testImplementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }
 
 apply plugin: 'war'
