@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.14.RELEASE'
     id 'java-library'
     id 'java-library-distribution'
+    id 'com.jfrog.artifactory' version '4.31.0'
 }
 
 group = 'org.mifos'
@@ -64,6 +65,9 @@ dependencies {
 }
 
 apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 tasks.named('test') {
     useJUnitPlatform()
@@ -95,4 +99,37 @@ distributions {
             }
         }
     }
+}
+artifactory {
+  contextUrl = 'https://mifos.jfrog.io/artifactory'   //The base Artifactory URL if not overridden by the publisher/resolver
+  publish {
+    contextUrl = 'https://mifos.jfrog.io/artifactory'   //The base Artifactory URL for the publisher
+    //A closure defining publishing information
+    repository {
+      repoKey = 'libs-snapshot-local'   //The Artifactory repository key to publish to
+      username = "${findProperty('fineract.config.username')}"          //The publisher user name
+      password = "${findProperty('fineract.config.password')}"       //The publisher password or API key
+    }
+    defaults {
+        publications ('ivyJava','mavenJava','foo')
+        publishConfigs('archives', 'published')                   
+        publishBuildInfo = true   //Publish build-info to Artifactory (true by default)
+        publishArtifacts = true   //Publish artifacts to Artifactory (true by default)
+        publishPom = true   //Publish generated POM files to Artifactory (true by default).
+    }
+  }
+  clientConfig.timeout = 600 // Artifactory connection timeout (in seconds). The default timeout is 300 seconds.
+  clientConfig.setInsecureTls(false) // Set to true to skip TLS certificates verification (false by default).
+}
+
+artifactoryPublish {
+    skip = false //Skip build info analysis and publishing (false by default)
+    contextUrl = 'https://mifos.jfrog.io/artifactory'
+    clientConfig.publisher.repoKey = 'libs-snapshot-local'
+    clientConfig.publisher.username = "${findProperty('fineract.config.username')}"
+    clientConfig.publisher.password = "${findProperty('fineract.config.password')}"
+
+    clientConfig.publisher.setFilterExcludedArtifactsFromBuild(true) // Set to true to avoid adding the filtered artifacts to the build-info.
+    // Minimum file size in KB for which the plugin performs checksum deploy optimization. Default: 10. Set to 0 to disable uploading files with checksum that already exists in Artifactory.
+    clientConfig.publisher.minChecksumDeploySizeKb = 10
 }

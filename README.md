@@ -4,6 +4,14 @@ This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob
 
 See [TODO](TODO.md) for possible future follow-up enhancement work.
 
+## Download, Unzip and Use the binaries 
+
+```bash
+    mkdir fineract-pentaho  && cd fineract-pentaho
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/org/mifos/fineract-pentaho/0.0.1-SNAPSHOT/fineract-pentaho-0.0.1-SNAPSHOT.tar
+    tar -xvf fineract-pentaho-0.0.1-SNAPSHOT.tar
+```
+
 ## Build & Use For Linux Users
 
 This project is currently only tested against the very latest and greatest
