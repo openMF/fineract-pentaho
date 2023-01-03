@@ -4,6 +4,8 @@ This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob
 
 See [TODO](TODO.md) for possible future follow-up enhancement work.
 
+The Pentaho reports has been updated to the version 9.3, please use the [`Pentaho Report Designed version 9.3`](https://sourceforge.net/projects/pentaho/files/Pentaho-9.3/client-tools/prd-ce-9.3.0.0-428.zip/download) 
+
 ## Download, Unzip and Use the binaries 
 
 ```bash
