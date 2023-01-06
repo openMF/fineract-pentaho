@@ -125,7 +125,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             reportPath = getReportPath() + reportName + ".prpt";
         }
         var outPutInfo = "Report path: " + reportPath;
-        logger.info("Report path: {}", outPutInfo);
+        logger.debug("Report path: {}", outPutInfo);
 
         // load report definition
         final var manager = new ResourceManager();
@@ -197,7 +197,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
                         && (!paramName.equals("password") && !paramName.equals("userid"))))) {
 
                     var outPutInfo2 = "paramName:" + paramName;
-                    logger.info("paramName: {}", outPutInfo2);
+                    logger.debug("paramName: {}", outPutInfo2);
 
                     final var pValue = queryParams.get(paramName);
                     if (StringUtils.isBlank(pValue)) {
@@ -207,26 +207,24 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
 
                     final Class<?> clazz = paramDefEntry.getValueType();
                     var outPutInfo3 = "addParametersToReport(" + paramName + " : " + pValue + " : " + clazz.getCanonicalName() + ")";
-                    logger.info("outputInfo: {}", outPutInfo3);
+                    logger.debug("outputInfo: {}", outPutInfo3);
 
                     if (clazz.getCanonicalName().equalsIgnoreCase("java.lang.Integer")) {
                         rptParamValues.put(paramName, Integer.parseInt(pValue));
                     } else if (clazz.getCanonicalName().equalsIgnoreCase("java.lang.Long")) {
                         rptParamValues.put(paramName, Long.parseLong(pValue));
                     } else if (clazz.getCanonicalName().equalsIgnoreCase("java.sql.Date")) {
-                        logger.info("ParamName: {}", paramName);
-                        logger.info("ParamValue: {}", pValue.toString());
+                        logger.debug("ParamName: {}", paramName);
+                        logger.debug("ParamValue: {}", pValue.toString());
                         String myDate = pValue.toString();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
                         Date date = sdf.parse(myDate);
                         long millis = date.getTime();
-                        java.sql.Date mySQLDate = new java.sql.Date(millis);
-                        logger.info("FECHA: " + mySQLDate);
-                        rptParamValues.put(paramName, mySQLDate);
-                        logger.info("FECHA AGREDADA");
+                        java.sql.Date mySQLDate = new java.sql.Date(millis);                        
+                        rptParamValues.put(paramName, mySQLDate);                        
                     } else {
-                        logger.info("ParamName Unknown: {}", paramName);
-                        logger.info("ParamValue Unknown: {}", pValue.toString());
+                        logger.warn("ParamName Unknown: {}", paramName);
+                        logger.warn("ParamValue Unknown: {}", pValue.toString());
                         rptParamValues.put(paramName, pValue);
                     }
                 }
@@ -244,13 +242,13 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
 
             final var userhierarchy = currentUser.getOffice().getHierarchy();
             var outPutInfo4 = "db URL:" + tenantUrl + "      userhierarchy:" + userhierarchy;
-            logger.info(outPutInfo4);
+            logger.debug(outPutInfo4);
 
             rptParamValues.put("userhierarchy", userhierarchy);
 
             final var userid = currentUser.getId();
             var outPutInfo5 = "db URL:" + tenantUrl + "      userid:" + userid;
-            logger.info(outPutInfo5);
+            logger.debug(outPutInfo5);
 
             rptParamValues.put("userid", userid);
 
@@ -306,15 +304,12 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
 
             Driver e = DriverManager.getDriver(getTenantUrl());
             // Printing the driver
-            logger.info("Driver: " + e.getClass().getName().toString());
-
+            logger.debug("Driver: " + e.getClass().getName().toString());
             connectionProvider.setDriver(e.getClass().getName().toString());
             connectionProvider.setUrl(getTenantUrl());
             connectionProvider.setProperty("user", tenantConnection.getSchemaUsername());
-            logger.info("{}", tenantConnection.getSchemaUsername());
-
+            logger.debug("{}", tenantConnection.getSchemaUsername());
             connectionProvider.setProperty("password", tenantConnection.getSchemaPassword());
-            logger.info("{}", tenantConnection.getSchemaPassword());
             sqlReportDataFactory.setConnectionProvider(connectionProvider);
         }
     }
@@ -346,7 +341,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
                     TenantConstants.PROPERTY_RO_SCHEMA_CONNECTION_PARAMETERS, schemaConnectionParameters);
         }
         String jdbcUrl = toJdbcUrl(protocol, schemaServer, schemaPort, schemaName, schemaConnectionParameters);
-        logger.info("{}", jdbcUrl);
+        logger.debug("{}", jdbcUrl);
 
         return jdbcUrl;
     }
