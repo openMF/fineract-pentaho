@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.infrastructure.report.service;
+package community.mifos.reporting;
 
 import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
 import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
@@ -42,6 +42,7 @@ import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConn
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
+import org.apache.fineract.infrastructure.report.service.ReportingProcessService;
 import org.apache.fineract.infrastructure.security.constants.TenantConstants;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
