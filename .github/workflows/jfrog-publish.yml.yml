@@ -2,7 +2,7 @@ name: Publish package to the Mifos Artifactory and GitHub Packages
 on:
   push:
     branches:
-      - develop
+      - maven
 jobs:
   publish:
     runs-on: ubuntu-latest 
@@ -17,10 +17,10 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           server-id: central
-          server-username: JFROG_USERNAME
-          server-password: JFROG_PASSWORD
+          server-username: ARTIFACTORY_USERNAME
+          server-password: ARTIFACTORY_PASSWORD
       - name: Publish to the Mifos Artifactory
         run: mvn -Dmaven.test.skip=true --batch-mode deploy
         env:
-          JFROG_USERNAME: ${{ secrets.JFROG_USERNAME }}
-          JFROG_PASSWORD: ${{ secrets.JFROG_PASSWORD }}
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
