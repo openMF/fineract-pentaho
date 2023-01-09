@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package community.mifos.reporting;
+package org.apache.fineract.infrastructure.report.service;
 
 import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
 import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;

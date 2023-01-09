@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.mifos.fineract.pentaho;
+package org.apache.fineract.infrastructure.report.service;
 
 import com.google.common.truth.Truth;
 import java.util.Map;
