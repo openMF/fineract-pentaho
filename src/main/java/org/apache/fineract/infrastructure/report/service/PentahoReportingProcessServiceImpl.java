@@ -35,16 +35,21 @@ import javax.sql.DataSource;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
+
 import org.apache.fineract.infrastructure.core.api.ApiParameterHelper;
 import org.apache.fineract.infrastructure.core.config.FineractProperties;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenant;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
+import org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor;
+import org.apache.fineract.infrastructure.core.service.database.DataSourcePerTenantServiceFactory;
+import org.apache.fineract.infrastructure.core.service.migration.TenantDataSourceFactory;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
 import org.apache.fineract.infrastructure.report.service.ReportingProcessService;
 import org.apache.fineract.infrastructure.security.constants.TenantConstants;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
+
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -74,6 +79,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
 
     private static final Logger logger = LoggerFactory.getLogger(PentahoReportingProcessServiceImpl.class);
     private final String mifosBaseDir = System.getProperty("user.home") + File.separator + ".mifosx";
+    private final DatabasePasswordEncryptor databasePasswordEncryptor;
 
     @Value("${FINERACT_PENTAHO_REPORTS_PATH}")
     private String fineractPentahoBaseDir;
@@ -92,10 +98,11 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
 
     @Autowired
     public PentahoReportingProcessServiceImpl(final PlatformSecurityContext context,
-            final @Qualifier("hikariTenantDataSource") DataSource tenantDataSource) {
+            final @Qualifier("hikariTenantDataSource") DataSource tenantDataSource, DatabasePasswordEncryptor databasePasswordEncryptor) {
         ClassicEngineBoot.getInstance().start();
         this.tenantDataSource = tenantDataSource;
         this.context = context;
+        this.databasePasswordEncryptor = databasePasswordEncryptor ;
     }
 
     @Override
@@ -263,7 +270,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             if (tenantConnection.getSchemaPassword().equalsIgnoreCase("") || tenantConnection.getSchemaPassword() == null) {
                 rptParamValues.put("password", environment.getProperty("FINERACT_DEFAULT_TENANTDB_PWD"));
             } else {
-                rptParamValues.put("password", tenantConnection.getSchemaPassword());
+                rptParamValues.put("password", databasePasswordEncryptor.decrypt(tenantConnection.getSchemaPassword()); 
             }
 
         } catch (Throwable t) {
