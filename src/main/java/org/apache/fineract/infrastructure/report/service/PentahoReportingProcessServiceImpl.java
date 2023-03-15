@@ -270,7 +270,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             if (tenantConnection.getSchemaPassword().equalsIgnoreCase("") || tenantConnection.getSchemaPassword() == null) {
                 rptParamValues.put("password", environment.getProperty("FINERACT_DEFAULT_TENANTDB_PWD"));
             } else {
-                rptParamValues.put("password", databasePasswordEncryptor.decrypt(tenantConnection.getSchemaPassword()); 
+                rptParamValues.put("password", databasePasswordEncryptor.decrypt(tenantConnection.getSchemaPassword())); 
             }
 
         } catch (Throwable t) {
