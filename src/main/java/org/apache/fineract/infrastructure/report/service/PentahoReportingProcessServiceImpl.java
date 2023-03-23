@@ -18,6 +18,8 @@
  */
 package org.apache.fineract.infrastructure.report.service;
 
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
 import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
 
@@ -32,8 +34,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import javax.sql.DataSource;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
 import org.apache.fineract.infrastructure.core.api.ApiParameterHelper;
@@ -43,10 +43,7 @@ import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConn
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor;
-import org.apache.fineract.infrastructure.core.service.database.DataSourcePerTenantServiceFactory;
-import org.apache.fineract.infrastructure.core.service.migration.TenantDataSourceFactory;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
-import org.apache.fineract.infrastructure.report.service.ReportingProcessService;
 import org.apache.fineract.infrastructure.security.constants.TenantConstants;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 
