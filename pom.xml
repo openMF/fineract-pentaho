@@ -10,7 +10,7 @@
     </parent>
     <groupId>community.mifos</groupId>
     <artifactId>pentaho-plugin</artifactId>
-    <version>1.8.3-SNAPSHOT</version>
+    <version>1.8.4-SNAPSHOT</version>
     <name>pentaho-plugin</name>
     <description>Mifos Pentaho Reporting Plugin for Apache Fineract</description>
 
@@ -19,7 +19,7 @@
         <fineract.version>0.0.0-0f0010d1-SNAPSHOT</fineract.version>
         <pentaho.version>9.5.0.0-SNAPSHOT</pentaho.version>
         <graal.version>22.3.1</graal.version>
-        <eclipselink.version>4.0.1</eclipselink.version>
+        <eclipselink.version>2.7.10</eclipselink.version>
         <truth.version>1.1.3</truth.version>
     </properties>
 
@@ -87,6 +87,15 @@
                 </exclusion>
             </exclusions>
 	</dependency>
+        <!--LOCAL JAR FILE
+        <dependency>
+            <groupId>org.apache.fineract</groupId>
+            <artifactId>fineract-provider</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>$HOME/fineract/fineract-provider/build/libs/fineract-provider-0.0.0-2ac92089-plain.jar</systemPath>
+        </dependency>
+        -->
         <dependency>
             <groupId>org.pentaho.reporting.engine</groupId>
             <artifactId>classic-core</artifactId>
@@ -177,7 +186,7 @@
             <version>${graal.version}</version>
             <scope>compile</scope>            
 	</dependency>
-        <!-- Testing -->
+        <!-- Testing-->
         <dependency>
             <groupId>org.apache.fineract</groupId>
             <artifactId>fineract-client</artifactId>
