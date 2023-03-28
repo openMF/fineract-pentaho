@@ -4,7 +4,7 @@ This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob
 
 See [TODO](TODO.md) for possible future follow-up enhancement work.
 
-The Pentaho reports has been updated to the version 9.5, please use the [`Pentaho Report Designed version 9.5`](https://sourceforge.net/projects/pentaho/files/Pentaho-9.3/client-tools/prd-ce-9.3.0.0-428.zip/download) 
+The Pentaho reports has been updated to the version 9.5, please use the [`Pentaho Report Designed version 9.5`](https://mifos.jfrog.io/artifactory/libs-snapshot-local/org/pentaho/reporting/prd-ce/9.5.0.0-SNAPSHOT/prd-ce-9.5.0.0-20230108.081758-1.zip) 
 
 ## For Developers
 
@@ -15,20 +15,19 @@ Maven
     <dependency>
         <groupId>community.mifos</groupId>
         <artifactId>pentaho-plugin</artifactId>
-        <version>1.8.3-SNAPSHOT</version>
+        <version>1.8.4-SNAPSHOT</version>
     </dependency>
 ```
 Gradle
 ```bash
-    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.8.3-SNAPSHOT')
+    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.8.4-SNAPSHOT')
 ```
 
 ## Download, Unzip and Use the binaries 
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
-    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/org/mifos/fineract-pentaho/0.0.1-SNAPSHOT/fineract-pentaho-0.0.1-SNAPSHOT.tar
-    tar -xvf fineract-pentaho-0.0.1-SNAPSHOT.tar
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.8.4-SNAPSHOT/pentaho-plugin-1.8.4-20230328.070901-1.jar
 ```
 
 ## Build & Use For Linux Users
@@ -41,7 +40,7 @@ other versions may be possible, but is not tested or documented here.
 
 ```bash
     git clone https://github.com/openMF/fineract-pentaho.git
-    cd fineract-pentaho && ./gradlew -x test distZip && cd ..
+    cd fineract-pentaho && ./mvnw -Dmaven.test.skip=true clean package && cd ..
 ```
 2. Export the Location of Pentaho Reports (prpt files) in a variable required by the Plugin
 
@@ -80,7 +79,7 @@ The script basically just creates the following directory structure and download
 ```bash
     fineract-provider.jar
     lib/
-        fineract-pentaho-0.0.1-SNAPSHOT-plain.jar
+        pentaho-plugin-1.8.4-20230328.070901-1.jar
         mysql-connector-j-8.0.31.jar
         libswing-9.3.0.0-428.jar
         libformat-9.3.0.0-428.jar
