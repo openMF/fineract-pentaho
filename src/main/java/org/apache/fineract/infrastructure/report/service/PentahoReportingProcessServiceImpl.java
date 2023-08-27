@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.sql.DataSource;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 
 import org.apache.fineract.infrastructure.core.api.ApiParameterHelper;
