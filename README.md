@@ -15,19 +15,19 @@ Maven
     <dependency>
         <groupId>community.mifos</groupId>
         <artifactId>pentaho-plugin</artifactId>
-        <version>1.8.4-SNAPSHOT</version>
+        <version>1.9.0-SNAPSHOT</version>
     </dependency>
 ```
 Gradle
 ```bash
-    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.8.4-SNAPSHOT')
+    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.9.0-SNAPSHOT')
 ```
 
 ## Download, Unzip and Use the binaries 
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
-    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.8.4-SNAPSHOT/pentaho-plugin-1.8.4-20230328.070901-1.jar
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.9.0-SNAPSHOT/pentaho-plugin-1.9.0-20230328.070901-1.jar
 ```
 
 ## Build & Use For Linux Users
