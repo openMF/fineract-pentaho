@@ -27,7 +27,7 @@ Gradle
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
-    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.9.0-SNAPSHOT/pentaho-plugin-1.9.0-20230328.070901-1.jar
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.9.0-SNAPSHOT/pentaho-plugin-1.9.0-20230827.055940-1.jar 
 ```
 
 ## Build & Use For Linux Users
@@ -79,39 +79,84 @@ The script basically just creates the following directory structure and download
 ```bash
     fineract-provider.jar
     lib/
-        pentaho-plugin-1.8.4-20230328.070901-1.jar
-        mysql-connector-j-8.0.31.jar
-        libswing-9.3.0.0-428.jar
-        libformat-9.3.0.0-428.jar
-        libpixie-9.3.0.0-428.jar
-        classic-core-9.3.0.0-428.jar
-        flute-9.3.0.0-428.jar
-        classic-extensions-scripting-9.3.0.0-428.jar
-        libserializer-9.3.0.0-428.jar
-        libdocbundle-9.3.0.0-428.jar
-        librepository-9.3.0.0-428.jar
-        wizard-core-9.3.0.0-428.jar
-        libformula-9.3.0.0-428.jar
-        libxml-9.3.0.0-428.jar
-        libbase-9.3.0.0-428.jar
-        classic-extensions-9.3.0.0-428.jar
-        libfonts-9.3.0.0-428.jar
-        commons-database-model-9.3.0.0-428.jar
-        libsparkline-9.3.0.0-428.jar
-        libloader-9.3.0.0-428.jar
-        js-scriptengine-22.2.0.jar
-        commons-vfs2-2.7.0.jar
-        groovy-all-2.4.8.jar
-        ehcache-core-2.5.1.jar
-        barcode4j-2.0.jar
-        js-1.7R3.jar
-        bsf-2.4.0.jar
-        barbecue-1.5-beta1.jar
-        graal-sdk-22.2.0.jar
-        js-22.2.0.jar
+        antlr-complete-3.5.2.jar
+asm-3.2.jar
+avalon-framework-4.1.5.jar
+barbecue-1.5-beta1.jar
+barcode4j-2.0.jar
+batik-anim-1.9.1.jar
+batik-awt-util-1.9.1.jar
+batik-bridge-1.9.1.jar
+batik-codec-1.9.1.jar
+batik-constants-1.9.1.jar
+batik-css-1.9.1.jar
+batik-dom-1.9.1.jar
+batik-ext-1.9.1.jar
+batik-gui-util-1.9.1.jar
+batik-gvt-1.9.1.jar
+batik-i18n-1.9.1.jar
+batik-parser-1.9.1.jar
+batik-script-1.9.1.jar
+batik-svg-dom-1.9.1.jar
+batik-transcoder-1.9.1.jar
+batik-util-1.9.1.jar
+batik-xml-1.9.1.jar
+bcmail-jdk14-138.jar
+bsf-2.4.0.jar
+bsh-1.3.0.jar
+classic-core-9.5.0.0-SNAPSHOT.jar
+classic-extensions-9.5.0.0-SNAPSHOT.jar
+classic-extensions-scripting-9.5.0.0-SNAPSHOT.jar
+commons-codec-1.15.jar
+commons-collections4-4.4.jar
+commons-compress-1.20.jar
+commons-database-model-9.5.0.0-SNAPSHOT.jar
+commons-dbcp-1.4.jar
+commons-math3-3.6.1.jar
+commons-pool-1.6.jar
+commons-vfs2-2.7.0.jar
+curvesapi-1.06.jar
+ehcache-core-2.5.1.jar
+flute-9.5.0.0-SNAPSHOT.jar
+graal-sdk-22.2.0.jar
+groovy-all-2.4.8.jar
+guava-17.0.jar
+httpclient-4.5.13.jar
+httpcore-4.4.15.jar
+icu4j-71.1.jar
+itext-2.1.7.jar
+itext-rtf-2.1.7.jar
+jakarta.activation-1.2.2.jar
+jakarta.xml.bind-api-2.3.3.jar
+javax.mail-1.6.1.jar
+js-1.7R3.jar
+js-22.2.0.jar
+js-scriptengine-22.2.0.jar
+libbase-9.5.0.0-SNAPSHOT.jar
+libdocbundle-9.5.0.0-SNAPSHOT.jar
+libfonts-9.5.0.0-SNAPSHOT.jar
+libformat-9.5.0.0-SNAPSHOT.jar
+libformula-9.5.0.0-SNAPSHOT.jar
+libloader-9.5.0.0-SNAPSHOT.jar
+libpixie-9.5.0.0-SNAPSHOT.jar
+librepository-9.5.0.0-SNAPSHOT.jar
+libserializer-9.5.0.0-SNAPSHOT.jar
+libsparkline-9.5.0.0-SNAPSHOT.jar
+libswing-9.5.0.0-SNAPSHOT.jar
+libxml-9.5.0.0-SNAPSHOT.jar
+pentaho-plugin-1.9.0-20230827.055940-1.jar
+regex-22.2.0.jar
+rsyntaxtextarea-1.3.2.jar
+sac-1.3.jar
+truffle-api-22.2.0.jar
+wizard-core-9.5.0.0-SNAPSHOT.jar
+xml-apis-ext-1.3.04.jar
+xmlgraphics-commons-2.2.jar
 ```
 
-and then it launches Apache Fineract with the Pentaho Plugin and all its dependencias.
+and then it launches Apache Fineract with the Pentaho Plugin and all its dependencies. 
+
+Please note that the library will work using the latest Apache Fineract development branch (27th August 2023), the commons-logging and slfj have been removed from the java classpath, also make sure you got installed the type fonts required by the reports. This Pentaho plugin will work only on Tomcat 10+. 
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
 
