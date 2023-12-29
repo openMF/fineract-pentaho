@@ -27,7 +27,7 @@ Gradle
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
-    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.9.0-SNAPSHOT/pentaho-plugin-1.9.0-20230827.055940-1.jar 
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.9.0-SNAPSHOT/pentaho-plugin-1.9.0-20231229.054725-10.jar 
 ```
 
 ## Build & Use For Linux Users
