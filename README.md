@@ -1,10 +1,34 @@
 # Pentaho Reporting Plugin for Apache Fineract
 
-This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/maintenance/1.6/fineract-doc/src/docs/en/deployment.adoc). The original work is this one https://github.com/vorburger/fineract-pentaho.
+## For Users
 
-See [TODO](TODO.md) for possible future follow-up enhancement work.
+1. Create a directory for the Pentaho reports and copy the PRPT files in it 
 
-The Pentaho reports has been updated to the version 9.5, please use the [`Pentaho Report Designed version 9.5`](https://mifos.jfrog.io/artifactory/libs-snapshot-local/org/pentaho/reporting/prd-ce/9.5.0.0-SNAPSHOT/prd-ce-9.5.0.0-20230108.081758-1.zip) 
+```bash
+    mkdir pentahoReports
+```
+
+2. Export the FINERACT_PENTAHO_REPORTS_PATH variable
+
+```bash
+    export FINERACT_PENTAHO_REPORTS_PATH="$PWD/pentahoReports/"
+```    
+
+3a. Execute only for DOCKER - Create a directory acopy the Fineract Pentaho Plugin and the Pentaho libraries in it
+
+```bash
+    mkdir fineract-pentaho  && cd fineract-pentaho
+    https://drive.google.com/file/d/1jUNcvmCPN8ErFNB1R0TPIGwLnNzDbsPu/view?usp=sharing
+```
+3b. Execute only for TOMCAT - Copy the Fineract Pentaho Plugin and Pentaho libraries in webapps/fineract-provider/WEB-INF/lib
+
+```bash
+    https://drive.google.com/file/d/1jUNcvmCPN8ErFNB1R0TPIGwLnNzDbsPu/view?usp=sharing
+```
+
+4. Restart Docker or Tomcat
+
+5. Test the Pentaho Reports
 
 ## For Developers
 
@@ -72,91 +96,7 @@ If the API call (above) [fails with](https://issues.apache.org/jira/browse/FINER
 _`"There is no ReportingProcessService registered in the ReportingProcessServiceProvider for this report type: Pentaho"`_, 
 then this Fineract Pentaho Plugin has not been correctly registered & loaded by Apache Fineract.
 
-## What script does
-
-The script basically just creates the following directory structure and download the required files by the Pentaho Report Engine and the Database Connection (In this case MySQL):
-
-```bash
-    fineract-provider.jar
-    lib/
-        antlr-complete-3.5.2.jar
-asm-3.2.jar
-avalon-framework-4.1.5.jar
-barbecue-1.5-beta1.jar
-barcode4j-2.0.jar
-batik-anim-1.9.1.jar
-batik-awt-util-1.9.1.jar
-batik-bridge-1.9.1.jar
-batik-codec-1.9.1.jar
-batik-constants-1.9.1.jar
-batik-css-1.9.1.jar
-batik-dom-1.9.1.jar
-batik-ext-1.9.1.jar
-batik-gui-util-1.9.1.jar
-batik-gvt-1.9.1.jar
-batik-i18n-1.9.1.jar
-batik-parser-1.9.1.jar
-batik-script-1.9.1.jar
-batik-svg-dom-1.9.1.jar
-batik-transcoder-1.9.1.jar
-batik-util-1.9.1.jar
-batik-xml-1.9.1.jar
-bcmail-jdk14-138.jar
-bsf-2.4.0.jar
-bsh-1.3.0.jar
-classic-core-9.5.0.0-SNAPSHOT.jar
-classic-extensions-9.5.0.0-SNAPSHOT.jar
-classic-extensions-scripting-9.5.0.0-SNAPSHOT.jar
-commons-codec-1.15.jar
-commons-collections4-4.4.jar
-commons-compress-1.20.jar
-commons-database-model-9.5.0.0-SNAPSHOT.jar
-commons-dbcp-1.4.jar
-commons-math3-3.6.1.jar
-commons-pool-1.6.jar
-commons-vfs2-2.7.0.jar
-curvesapi-1.06.jar
-ehcache-core-2.5.1.jar
-flute-9.5.0.0-SNAPSHOT.jar
-graal-sdk-22.2.0.jar
-groovy-all-2.4.8.jar
-guava-17.0.jar
-httpclient-4.5.13.jar
-httpcore-4.4.15.jar
-icu4j-71.1.jar
-itext-2.1.7.jar
-itext-rtf-2.1.7.jar
-jakarta.activation-1.2.2.jar
-jakarta.xml.bind-api-2.3.3.jar
-javax.mail-1.6.1.jar
-js-1.7R3.jar
-js-22.2.0.jar
-js-scriptengine-22.2.0.jar
-libbase-9.5.0.0-SNAPSHOT.jar
-libdocbundle-9.5.0.0-SNAPSHOT.jar
-libfonts-9.5.0.0-SNAPSHOT.jar
-libformat-9.5.0.0-SNAPSHOT.jar
-libformula-9.5.0.0-SNAPSHOT.jar
-libloader-9.5.0.0-SNAPSHOT.jar
-libpixie-9.5.0.0-SNAPSHOT.jar
-librepository-9.5.0.0-SNAPSHOT.jar
-libserializer-9.5.0.0-SNAPSHOT.jar
-libsparkline-9.5.0.0-SNAPSHOT.jar
-libswing-9.5.0.0-SNAPSHOT.jar
-libxml-9.5.0.0-SNAPSHOT.jar
-pentaho-plugin-1.9.0-20230827.055940-1.jar
-regex-22.2.0.jar
-rsyntaxtextarea-1.3.2.jar
-sac-1.3.jar
-truffle-api-22.2.0.jar
-wizard-core-9.5.0.0-SNAPSHOT.jar
-xml-apis-ext-1.3.04.jar
-xmlgraphics-commons-2.2.jar
-```
-
-and then it launches Apache Fineract with the Pentaho Plugin and all its dependencies. 
-
-Please note that the library will work using the latest Apache Fineract development branch (27th August 2023), the commons-logging and slfj have been removed from the java classpath, also make sure you got installed the type fonts required by the reports. This Pentaho plugin will work only on Tomcat 10+. 
+Please note that the library will work using the latest Apache Fineract development branch (14th February 2024), also make sure you got installed the type fonts required by the reports. This Pentaho plugin will work only on Tomcat 10+. 
 
 See also [`PentahoReportsTest`](src/test/java/org/mifos/fineract/pentaho/PentahoReportsTest.java) and the [`test`](test) script.
 
@@ -181,3 +121,12 @@ Fineract) by raising Pull Requests yourself with any enhancements you make, and 
 to maintain this project by helping other users on Issues and reviewing PR from others
 (you will be promoted to committer on this project when you contribute).  We recommend
 that you _Watch_ and _Star_ this project on GitHub to make it easy to get notified.
+
+## History
+
+This is a [_Plugin_ for Apache Fineract](https://github.com/apache/fineract/blob/maintenance/1.6/fineract-doc/src/docs/en/deployment.adoc). The original work is this one https://github.com/vorburger/fineract-pentaho.
+
+See [TODO](TODO.md) for possible future follow-up enhancement work.
+
+The Pentaho reports has been updated to the version 9.5, please use the [`Pentaho Report Designer version 9.5`](https://mifos.jfrog.io/artifactory/libs-snapshot-local/org/pentaho/reporting/prd-ce/9.5.0.0-SNAPSHOT/prd-ce-9.5.0.0-20230108.081758-1.zip) 
+
