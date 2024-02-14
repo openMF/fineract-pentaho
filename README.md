@@ -14,21 +14,19 @@
     export FINERACT_PENTAHO_REPORTS_PATH="$PWD/pentahoReports/"
 ```    
 
-3a. Execute only for DOCKER - Create a directory acopy the Fineract Pentaho Plugin and the Pentaho libraries in it
+3. [Download link for Fineract Pentaho Plugin ](https://sourceforge.net/projects/mifos/files/mifos-plugins/FineractPentahoPlugin/FineractPentahoPlugin-1.9.0.zip/download)  and extract the files (java jar files are on it)
+
+4a. Execute only for DOCKER - Create a directory acopy the Fineract Pentaho Plugin and the Pentaho libraries in it
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
-    https://drive.google.com/file/d/1jUNcvmCPN8ErFNB1R0TPIGwLnNzDbsPu/view?usp=sharing
-```
-3b. Execute only for TOMCAT - Copy the Fineract Pentaho Plugin and Pentaho libraries in webapps/fineract-provider/WEB-INF/lib
-
-```bash
-    https://drive.google.com/file/d/1jUNcvmCPN8ErFNB1R0TPIGwLnNzDbsPu/view?usp=sharing
 ```
 
-4. Restart Docker or Tomcat
+4b. Execute only for TOMCAT - Copy the Fineract Pentaho Plugin and Pentaho libraries in webapps/fineract-provider/WEB-INF/lib
 
-5. Test the Pentaho Reports
+5. Restart Docker or Tomcat
+
+6. Test the Pentaho Reports
 
 ## For Developers
 
