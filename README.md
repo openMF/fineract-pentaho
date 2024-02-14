@@ -16,13 +16,13 @@
 
 3. [Download link for Fineract Pentaho Plugin ](https://sourceforge.net/projects/mifos/files/mifos-plugins/FineractPentahoPlugin/FineractPentahoPlugin-1.9.0.zip/download)  and extract the files (java jar files are on it)
 
-4a. Execute only for DOCKER - Create a directory acopy the Fineract Pentaho Plugin and the Pentaho libraries in it
+4a. Execute only for DOCKER - Create a directory, copy the Fineract Pentaho Plugin and the Pentaho libraries in it
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
 ```
 
-4b. Execute only for TOMCAT - Copy the Fineract Pentaho Plugin and Pentaho libraries in webapps/fineract-provider/WEB-INF/lib
+4b. Execute only for TOMCAT - Copy the Fineract Pentaho Plugin and Pentaho libraries in $TOMCAT_HOME/webapps/fineract-provider/WEB-INF/lib/
 
 5. Restart Docker or Tomcat
 
