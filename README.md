@@ -14,7 +14,7 @@
     export FINERACT_PENTAHO_REPORTS_PATH="$PWD/pentahoReports/"
 ```    
 
-3. [Download link for Fineract Pentaho Plugin ](https://sourceforge.net/projects/mifos/files/mifos-plugins/FineractPentahoPlugin/FineractPentahoPlugin-1.9.0.zip/download)  and extract the files (java jar files are on it)
+3. [Download link for Fineract Pentaho Plugin ](https://sourceforge.net/projects/mifos/files/mifos-plugins/FineractPentahoPlugin/FineractPentahoPlugin-1.10.0.zip/download)  and extract the files (java jar files are on it)
 
 4a. Execute only for DOCKER - Create a directory, copy the Fineract Pentaho Plugin and the Pentaho libraries in it
 
@@ -37,19 +37,19 @@ Maven
     <dependency>
         <groupId>community.mifos</groupId>
         <artifactId>pentaho-plugin</artifactId>
-        <version>1.9.0-SNAPSHOT</version>
+        <version>1.10.0-SNAPSHOT</version>
     </dependency>
 ```
 Gradle
 ```bash
-    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.9.0-SNAPSHOT')
+    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.10.0-SNAPSHOT')
 ```
 
 ## Download, Unzip and Use the binaries 
 
 ```bash
     mkdir fineract-pentaho  && cd fineract-pentaho
-    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.9.0-SNAPSHOT/pentaho-plugin-1.9.0-20231229.054725-10.jar 
+    wget https://mifos.jfrog.io/artifactory/libs-snapshot-local/community/mifos/pentaho-plugin/1.10.0-SNAPSHOT/pentaho-plugin-1.10.0-20231229.054725-10.jar 
 ```
 
 ## Build & Use For Linux Users
