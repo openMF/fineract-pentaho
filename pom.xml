@@ -10,14 +10,14 @@
     </parent>
     <groupId>community.mifos</groupId>
     <artifactId>pentaho-plugin</artifactId>
-    <version>1.9.0-SNAPSHOT</version>
+    <version>1.10.0-SNAPSHOT</version>
     <name>pentaho-plugin</name>
     <description>Mifos Pentaho Reporting Plugin for Apache Fineract</description>
 
     <properties>
         <java.version>17</java.version>
-        <fineract.version>0.0.515-4e55cb1</fineract.version>
-        <pentaho.version>9.5.0.0-SNAPSHOT</pentaho.version>
+        <fineract.version>0.0.594-6b1620c</fineract.version>
+        <pentaho.version>9.4.0.0-SNAPSHOT</pentaho.version>
         <graal.version>22.3.1</graal.version>
         <eclipselink.version>4.0.0</eclipselink.version>
         <truth.version>1.1.3</truth.version>
@@ -227,6 +227,14 @@
     </build>
 
     <repositories>
+        <repository>
+            <id>hitachivantara</id>
+            <name>hitachivantara</name>
+            <url>https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
         <repository>          
           <id>fineract-release</id>
           <name>libs-release-local</name>
@@ -236,7 +244,7 @@
           <id>fineract-snapshot</id>
           <name>libs-snapshot-local</name>
           <url>https://mifos.jfrog.io/artifactory/libs-snapshot-local</url>
-        </repository>
+        </repository>        
         <repository>
             <id>oss-sonatype</id>
             <name>oss-sonatype</name>
