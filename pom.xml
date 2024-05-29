@@ -19,7 +19,7 @@
         <fineract.version>0.0.594-6b1620c</fineract.version>
         <pentaho.version>9.4.0.0-SNAPSHOT</pentaho.version>
         <graal.version>22.3.5</graal.version>
-        <eclipselink.version>4.0.0</eclipselink.version>
+        <eclipselink.version>4.0.3</eclipselink.version>
         <truth.version>1.1.3</truth.version>
     </properties>
 
