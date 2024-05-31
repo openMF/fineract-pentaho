@@ -30,32 +30,8 @@
 
 ## For Developers
 
-Add the repository https://mifos.jfrog.io/artifactory/libs-snapshot-local/
-
-Maven
-```bash
-    <dependency>
-        <groupId>community.mifos</groupId>
-        <artifactId>pentaho-plugin</artifactId>
-        <version>1.10.0-SNAPSHOT</version>
-    </dependency>
-```
-Gradle
-```bash
-    compile(group: 'community.mifos', name: 'pentaho-plugin', version: '1.10.0-SNAPSHOT')
-```
-
-## Download, Unzip and Use the binaries 
-
-```bash
-    mkdir fineract-pentaho  && cd fineract-pentaho
-    wget https://mifos.jfrog.io/artifactory/libs-snapshot/community/mifos/pentaho-plugin/1.10.0-SNAPSHOT/pentaho-plugin-1.10.0-20240422.141908-3.jar
-```
-
-## Build & Use For Linux Users
-
 This project is currently only tested against the very latest and greatest
-bleeding edge Fineract `develop` branch on Linux Ubuntu 20.04LTS. Building and using it against
+bleeding edge Fineract `develop` branch on Linux Ubuntu 22.04LTS. Building and using it against
 other versions may be possible, but is not tested or documented here.
 
 1. Download and compile
