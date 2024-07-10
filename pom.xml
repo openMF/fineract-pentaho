@@ -88,19 +88,6 @@
                 </exclusion>
             </exclusions>
 	</dependency>
-        <dependency>
-            <groupId>org.apache.fineract</groupId>
-            <artifactId>fineract-report</artifactId>
-            <version>${fineract.version}</version>
-            <classifier>plain</classifier>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.fineract</groupId>
-                    <artifactId>fineract-avro-schemas</artifactId>
-                </exclusion>
-            </exclusions>
-	</dependency>
         <!--LOCAL JAR FILE
         <dependency>
             <groupId>org.apache.fineract</groupId>
@@ -216,10 +203,16 @@
 	</dependency>
         <dependency>
             <groupId>org.apache.fineract</groupId>
+            <artifactId>fineract-core</artifactId>
+            <version>${fineract.version}</version>
+            <scope>compile</scope>            
+	</dependency>
+        <dependency>
+            <groupId>org.apache.fineract</groupId>
             <artifactId>fineract-report</artifactId>
             <version>${fineract.version}</version>
-            <scope>compile</scope> 
-        </dependency>
+            <scope>compile</scope>            
+	</dependency>
         <dependency>
             <groupId>com.google.truth</groupId>
             <artifactId>truth</artifactId>            
