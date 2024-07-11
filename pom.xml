@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <fineract.version>0.0.623-4e94317</fineract.version>
+        <fineract.version>0.0.660-5299123</fineract.version>
         <pentaho.version>9.4.0.0-SNAPSHOT</pentaho.version>
         <graal.version>23.0.4</graal.version>
         <eclipselink.version>4.0.3</eclipselink.version>
@@ -204,6 +204,12 @@
         <dependency>
             <groupId>org.apache.fineract</groupId>
             <artifactId>fineract-core</artifactId>
+            <version>${fineract.version}</version>
+            <scope>compile</scope>            
+	</dependency>
+        <dependency>
+            <groupId>org.apache.fineract</groupId>
+            <artifactId>fineract-report</artifactId>
             <version>${fineract.version}</version>
             <scope>compile</scope>            
 	</dependency>
