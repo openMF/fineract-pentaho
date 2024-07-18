@@ -248,9 +248,9 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
                     tenantConnection.getSchemaName(), tenantConnection.getSchemaConnectionParameters());
 
             final var userhierarchy = currentUser.getOffice().getHierarchy();
-            logger.error("userhierarchy "+userhierarchy);
+            logger.debug("userhierarchy "+userhierarchy);
             var outPutInfo4 = "db URL:" + tenantUrl + "      userhierarchy:" + userhierarchy;
-            logger.error(outPutInfo4);
+            logger.debug(outPutInfo4);
 
             rptParamValues.put("userhierarchy", userhierarchy);
 
