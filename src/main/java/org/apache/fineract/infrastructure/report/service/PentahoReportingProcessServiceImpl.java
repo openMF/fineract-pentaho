@@ -18,9 +18,6 @@
  */
 package org.apache.fineract.infrastructure.report.service;
 
-import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
-import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Driver;
@@ -32,15 +29,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.sql.DataSource;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.infrastructure.core.api.ApiParameterHelper;
 import org.apache.fineract.infrastructure.core.config.FineractProperties;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenant;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection;
+import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
+import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor;
@@ -48,7 +46,6 @@ import org.apache.fineract.infrastructure.dataqueries.data.ReportExportType;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
 import org.apache.fineract.infrastructure.security.constants.TenantConstants;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -71,6 +68,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 
 @Service
 @ReportService(type = "Pentaho")
@@ -273,6 +273,8 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             } else {
                 rptParamValues.put("password", databasePasswordEncryptor.decrypt(tenantConnection.getSchemaPassword()).trim()); 
             }
+
+            logger.debug("{}", rptParamValues);
 
         } catch (Throwable t) {
             logger.error("error.msg.reporting.error:", t);
