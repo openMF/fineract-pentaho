@@ -24,11 +24,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.sql.DataSource;
 
@@ -46,11 +42,7 @@ import org.apache.fineract.infrastructure.dataqueries.data.ReportExportType;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
 import org.apache.fineract.infrastructure.security.constants.TenantConstants;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.*;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
@@ -104,6 +96,28 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
         this.databasePasswordEncryptor = databasePasswordEncryptor ;
     }
 
+    public List<SubReport> getSubReports(MasterReport masterReport) {
+        List<SubReport> subReports = new ArrayList<>();
+        collectSubReports(masterReport.getReportHeader(), subReports);
+        collectSubReports(masterReport.getReportFooter(), subReports);
+        collectSubReports(masterReport.getPageHeader(), subReports);
+        collectSubReports(masterReport.getPageFooter(), subReports);
+        collectSubReports(masterReport.getItemBand(), subReports);
+        return subReports;
+    }
+
+    private void collectSubReports(Section section, List<SubReport> subReports) {
+        if (section == null) {
+            return;
+        }
+        for (int i = 0; i < section.getElementCount(); i++) {
+            Element element = section.getElement(i);
+            if (element instanceof SubReport) {
+                subReports.add((SubReport) element);
+            }
+        }
+    }
+
     @Override
     public Response processRequest(final String reportName, final MultivaluedMap<String, String> queryParams) {
         final var outputTypeParam = queryParams.getFirst("output-type");
@@ -153,6 +167,11 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             }
 
             addParametersToReport(masterReport, reportParams);
+
+            List<SubReport> subReports = getSubReports(masterReport);
+            for (SubReport subReport : subReports) {
+                setConnectionDetail(subReport.getDataFactory());
+            }
 
             final var baos = new ByteArrayOutputStream();
 
