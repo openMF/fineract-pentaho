@@ -153,9 +153,6 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             }
 
             addParametersToReport(masterReport, reportParams);
-            SQLReportDataFactory sqlReportDataFactory = (SQLReportDataFactory) compoundDataFactory.get(0);
-            final DriverConnectionProvider connectionProvider = (DriverConnectionProvider) sqlReportDataFactory.getConnectionProvider();
-            logger.debug("dataFactory db URL: {}", connectionProvider.getUrl());
 
             final var baos = new ByteArrayOutputStream();
 
