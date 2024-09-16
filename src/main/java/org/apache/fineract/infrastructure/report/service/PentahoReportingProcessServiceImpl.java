@@ -18,29 +18,28 @@
  */
 package org.apache.fineract.infrastructure.report.service;
 
-import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
-import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.sql.DataSource;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.infrastructure.core.api.ApiParameterHelper;
 import org.apache.fineract.infrastructure.core.config.FineractProperties;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenant;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection;
+import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toJdbcUrl;
+import static org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection.toProtocol;
 import org.apache.fineract.infrastructure.core.exception.PlatformDataIntegrityException;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor;
@@ -48,12 +47,14 @@ import org.apache.fineract.infrastructure.dataqueries.data.ReportExportType;
 import org.apache.fineract.infrastructure.report.annotation.ReportService;
 import org.apache.fineract.infrastructure.security.constants.TenantConstants;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
@@ -71,6 +72,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 
 @Service
 @ReportService(type = "Pentaho")
@@ -104,8 +108,36 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
         this.databasePasswordEncryptor = databasePasswordEncryptor ;
     }
 
-    @Override
-    public Response processRequest(final String reportName, final MultivaluedMap<String, String> queryParams) {
+    public List<SubReport> getSubReports(MasterReport masterReport) {
+        List<SubReport> subReports = new ArrayList<>();
+        collectSubReports(masterReport.getReportHeader(), subReports);
+        collectSubReports(masterReport.getReportFooter(), subReports);
+        collectSubReports(masterReport.getPageHeader(), subReports);
+        collectSubReports(masterReport.getPageFooter(), subReports);
+        collectSubReports(masterReport.getItemBand(), subReports);
+        return subReports;
+        }
+
+        private void collectSubReports(Section section, List<SubReport> subReports) {
+        if (section == null) {
+            return;
+        }
+        for (int i = 0; i < section.getElementCount(); i++) {
+            Element element = section.getElement(i);
+            if (element instanceof SubReport subReport) {
+            subReports.add(subReport);
+            // Recursively collect subreports within subreports
+            for (int j = 0; j < subReport.getElementCount(); j++) {
+                if (subReport.getElement(j) instanceof Section subSection) {
+                    collectSubReports(subSection, subReports);
+                }
+            }
+            }
+        }
+        }
+
+        @Override
+        public Response processRequest(final String reportName, final MultivaluedMap<String, String> queryParams) {
         final var outputTypeParam = queryParams.getFirst("output-type");
         final var reportParams = getReportParams(queryParams);
         final var locale = ApiParameterHelper.extractLocale(queryParams);
@@ -154,6 +186,12 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
 
             addParametersToReport(masterReport, reportParams);
 
+            List<SubReport> subReports = getSubReports(masterReport);
+            for (SubReport subReport : subReports) {
+                CompoundDataFactory subReportCompoundDataFactory = (CompoundDataFactory) subReport.getDataFactory();
+                setConnectionDetail(subReportCompoundDataFactory.get(0));
+            }
+
             final var baos = new ByteArrayOutputStream();
 
             if ("PDF".equalsIgnoreCase(outputType)) {
@@ -183,7 +221,8 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
                 throw new PlatformDataIntegrityException("error.msg.invalid.outputType", "No matching Output Type: " + outputType);
 
             }
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
             logger.error("Pentaho failed", t);
             throw new PlatformDataIntegrityException("error.msg.reporting.error", "Pentaho failed: " + t.getMessage());
         }
@@ -273,6 +312,7 @@ public class PentahoReportingProcessServiceImpl implements ReportingProcessServi
             } else {
                 rptParamValues.put("password", databasePasswordEncryptor.decrypt(tenantConnection.getSchemaPassword()).trim()); 
             }
+
 
         } catch (Throwable t) {
             logger.error("error.msg.reporting.error:", t);
